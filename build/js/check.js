@@ -18,8 +18,7 @@ var getMessage = function(a, b) {
         } else {
             var sum = 0;
             for (var i = 0; i < a.length; i++) {
-
-                sum = sum + Math.abs(parseInt(a[i], 10));
+                sum = sum + a[i];
             }
             message = 'Я прошёл ' + sum + ' шагов';
         }
