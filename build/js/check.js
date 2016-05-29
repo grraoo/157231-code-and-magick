@@ -12,8 +12,8 @@ var getMessage = function(a, b) {
         }
     } else if (a == parseInt(a)) {
         message = 'Я прыгнул на ' + jumpHeigntInCentimetres + ' сантиметров';
-    } else if (Object.prototype.toString.call(a) == '[object Array]') {
-        if (Object.prototype.toString.call(b) == '[object Array]') {
+    } else if (Array.isArray(a)) {
+        if (Array.isArray(b)) {
             for (i = 0; i < a.length; i++) {
                 passedWay += a[i] * b[i];
             }
