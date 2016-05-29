@@ -1,27 +1,29 @@
 var getMessage = function(a, b) {
     var message = '';
+    var i = 0;
+    var numberOfSteps = 0;
+    var passedWay = 0;
+    var jumpHeigntInCentimetres = a*100;
     if (typeof a == 'boolean') {
         if (a) {
             message = 'Я попал в ' + b;
         } else {
             message = 'Я никуда не попал';
         }
-    } else if (typeof a == 'number') {
-        message = 'Я прыгнул на ' + a * 100 + ' сантиметров';
-    } else if ((Object.prototype.toString.call(a) == '[object Array]')) {
-        if ((Object.prototype.toString.call(b) == '[object Array]')) {
-            var length = 0;
-            for (var i = 0; i < a.length; i++) {
-                length = length + a[i] * b[i];
+    } else if (a == parseInt(a)) {
+        message = 'Я прыгнул на ' + jumpHeigntInCentimetres + ' сантиметров';
+    } else if (Object.prototype.toString.call(a) == '[object Array]') {
+        if (Object.prototype.toString.call(b) == '[object Array]') {
+            for (i = 0; i < a.length; i++) {
+                passedWay += a[i] * b[i];
             }
-            message = 'Я прошёл ' + length + ' метров';
+            message = 'Я прошёл ' + passedWay + ' метров';
         } else {
-            var sum = 0;
-            for (var i = 0; i < a.length; i++) {
-                sum = sum + a[i];
+            for (i = 0; i < a.length; i++) {
+                numberOfSteps += a[i];
             }
-            message = 'Я прошёл ' + sum + ' шагов';
+            message = 'Я прошёл ' + numberOfSteps + ' шагов';
         }
     }
     return message;
-}
+};
