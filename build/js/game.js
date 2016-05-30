@@ -400,7 +400,7 @@
 
      var msgWidth = 30;
 
-     var DrawMessage = function() {
+     var drawMessage = function() {
 
        var arrayMsg = gameMessage.split(' ');
        var outputMessage = [];
