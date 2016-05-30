@@ -378,19 +378,19 @@
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
-     var gameMessage = '';
-     switch (this.state.currentStatus) {
+      var gameMessage = '';
+      switch (this.state.currentStatus) {
 
-         case Verdict.WIN:
+       case Verdict.WIN:
              gameMessage = 'Ты всех победил и спас этот мир, правда пока не известно от чего';
              break;
-         case Verdict.FAIL:
+       case Verdict.FAIL:
              gameMessage = 'Ты проиграл, и некому больше спасать этот мир!.. R.I.P.';
              break;
-         case Verdict.PAUSE:
+       case Verdict.PAUSE:
              gameMessage = 'Самое время выкурить трубочку, и выпить кружечку эля.';
              break;
-         case Verdict.INTRO:
+       case Verdict.INTRO:
              gameMessage = 'Добро пожаловать в игру! Вперёд к приключениям! Пусть горячие файерболы и левитация помогут тебе!';
              break;
 
@@ -400,69 +400,69 @@
 
      var msgWidth = 30;
 
-     var DrawMessage = function() {
+     var drawMessage = function() {
 
-         var arrayMsg = gameMessage.split(' ');
-         var outputMessage = [];
-         var j = 0;
-         var i = 0;
-         for (i; j + i < arrayMsg.length; i++) {
-             outputMessage[i] = arrayMsg[i + j];
-             for (j; i + j + 1 < arrayMsg.length; j++) {
-                 if ((outputMessage[i].length + arrayMsg[i + j + 1].length) < msgWidth) {
-                     outputMessage[i] += ' ' + arrayMsg[i + j + 1];
-                 } else break;
-             };
-         };
-         return outputMessage;
+       var arrayMsg = gameMessage.split(' ');
+       var outputMessage = [];
+       var j = 0;
+       var i = 0;
+       for (i; j + i < arrayMsg.length; i++) {
+           outputMessage[i] = arrayMsg[i + j];
+           for (j; i + j + 1 < arrayMsg.length; j++) {
+               if ((outputMessage[i].length + arrayMsg[i + j + 1].length) < msgWidth) {
+                   outputMessage[i] += ' ' + arrayMsg[i + j + 1];
+               } else {break};
+           }
+       }
+       return outputMessage;
      };
 
      var messageCanvas = function() {
-         var cloudHeight = DrawMessage().length * 16 + 48;
+       var cloudHeight = drawMessage().length * 16 + 48;
 
-         var canvasElement = document.createElement('canvas');
+       var canvasElement = document.createElement('canvas');
 
-         canvasElement.setAttribute('width', 300);
-         canvasElement.setAttribute('height', cloudHeight);
+       canvasElement.setAttribute('width', 300);
+       canvasElement.setAttribute('height', cloudHeight);
 
-         var ctx = canvasElement.getContext('2d');
-         drawMessageCloud(ctx, cloudHeight);
+       var ctx = canvasElement.getContext('2d');
+       drawMessageCloud(ctx, cloudHeight);
 
-         canvasElement.classList.add("game-message")
+       canvasElement.classList.add('game-message');
 
-         return canvasElement;
+       return canvasElement;
      };
 
      var drawMessageCloud = function(ctx, cloudHeight) {
 
-         ctx.beginPath();
-         ctx.moveTo(10, 10);
-         ctx.lineTo(290, 20);
-         ctx.lineTo(300, 10 + cloudHeight / 2 + 10);
-         ctx.lineTo(280, 10 + cloudHeight * 0.9);
-         ctx.lineTo(20, cloudHeight);
-         ctx.closePath();
-         ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
-         ctx.fill();
-         ctx.stroke();
+       ctx.beginPath();
+       ctx.moveTo(10, 10);
+       ctx.lineTo(290, 20);
+       ctx.lineTo(300, 10 + cloudHeight / 2 + 10);
+       ctx.lineTo(280, 10 + cloudHeight * 0.9);
+       ctx.lineTo(20, cloudHeight);
+       ctx.closePath();
+       ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+       ctx.fill();
+       ctx.stroke();
 
-         ctx.beginPath();
-         ctx.moveTo(0, 0);
-         ctx.lineTo(280, 10);
-         ctx.lineTo(290, cloudHeight / 2);
-         ctx.lineTo(270, cloudHeight * 0.9);
-         ctx.lineTo(10, cloudHeight - 10);
-         ctx.closePath();
-         ctx.stroke();
-         ctx.fillStyle = "white";
-         ctx.fill();
-         ctx.font = '12px "PT Mono"';
-         ctx.textBaseline = 'hanging';
-         ctx.fillStyle = "black";
-         for (var i = 0; i < DrawMessage().length; i++) {
-             ctx.fillText(DrawMessage()[i], 16, 16 + i * 16);
-         }
-     }
+       ctx.beginPath();
+       ctx.moveTo(0, 0);
+       ctx.lineTo(280, 10);
+       ctx.lineTo(290, cloudHeight / 2);
+       ctx.lineTo(270, cloudHeight * 0.9);
+       ctx.lineTo(10, cloudHeight - 10);
+       ctx.closePath();
+       ctx.stroke();
+       ctx.fillStyle = 'white';
+       ctx.fill();
+       ctx.font = '12px "PT Mono"';
+       ctx.textBaseline = 'hanging';
+       ctx.fillStyle = 'black';
+       for (var i = 0; i < drawMessage().length; i++) {
+           ctx.fillText(DrawMessage()[i], 16, 16 + i * 16);
+       }
+     };
 
      document.body.appendChild(messageCanvas());
 
