@@ -381,16 +381,16 @@
       var gameMessage = '';
       switch (this.state.currentStatus) {
 
-       case Verdict.WIN:
+        case Verdict.WIN:
              gameMessage = 'Ты всех победил и спас этот мир, правда пока не известно от чего';
              break;
-       case Verdict.FAIL:
+        case Verdict.FAIL:
              gameMessage = 'Ты проиграл, и некому больше спасать этот мир!.. R.I.P.';
              break;
-       case Verdict.PAUSE:
+        case Verdict.PAUSE:
              gameMessage = 'Самое время выкурить трубочку, и выпить кружечку эля.';
              break;
-       case Verdict.INTRO:
+        case Verdict.INTRO:
              gameMessage = 'Добро пожаловать в игру! Вперёд к приключениям! Пусть горячие файерболы и левитация помогут тебе!';
              break;
 
@@ -400,7 +400,7 @@
 
      var msgWidth = 30;
 
-     var drawMessage = function() {
+     var DrawMessage = function() {
 
        var arrayMsg = gameMessage.split(' ');
        var outputMessage = [];
@@ -411,7 +411,9 @@
            for (j; i + j + 1 < arrayMsg.length; j++) {
                if ((outputMessage[i].length + arrayMsg[i + j + 1].length) < msgWidth) {
                    outputMessage[i] += ' ' + arrayMsg[i + j + 1];
-               } else {break};
+               } else {
+                break;
+               }
            }
        }
        return outputMessage;
@@ -460,7 +462,7 @@
        ctx.textBaseline = 'hanging';
        ctx.fillStyle = 'black';
        for (var i = 0; i < drawMessage().length; i++) {
-           ctx.fillText(DrawMessage()[i], 16, 16 + i * 16);
+           ctx.fillText(drawMessage()[i], 16, 16 + i * 16);
        }
      };
 
