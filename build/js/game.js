@@ -371,7 +371,6 @@
         this.initializeLevelAndStart(this.level, needToRestartTheGame);
 
         window.removeEventListener('keydown', this._pauseListener);
-
       }
     },
 
@@ -381,7 +380,6 @@
     _drawPauseScreen: function() {
       var gameMessage = '';
       switch (this.state.currentStatus) {
-
         case Verdict.WIN:
           gameMessage = 'Ты всех победил и спас этот мир, правда пока не известно от чего';
           break;
@@ -394,24 +392,21 @@
         case Verdict.INTRO:
           gameMessage = 'Добро пожаловать в игру! Вперёд к приключениям! Пусть горячие файерболы и левитация помогут тебе!';
           break;
-
       }
-
 
       var messageWidth = 30;
       var lineHeight = 16;
 
-
       var drawMessage = function() {
-        var arrayMsg = gameMessage.split(' ');
+        var arrayMessage = gameMessage.split(' ');
         var outputMessage = [];
         var j = 0;
         var i = 0;
-        for (i; j + i < arrayMsg.length; i++) {
-          outputMessage[i] = arrayMsg[i + j];
-          for (j; i + j + 1 < arrayMsg.length; j++) {
-            if ((outputMessage[i].length + arrayMsg[i + j + 1].length) < messageWidth) {
-              outputMessage[i] += ' ' + arrayMsg[i + j + 1];
+        for (i; j + i < arrayMessage.length; i++) {
+          outputMessage[i] = arrayMessage[i + j];
+          for (j; i + j + 1 < arrayMessage.length; j++) {
+            if ((outputMessage[i].length + arrayMessage[i + j + 1].length) < messageWidth) {
+              outputMessage[i] += ' ' + arrayMessage[i + j + 1];
             } else {
               break;
             }
@@ -425,20 +420,17 @@
       var messageCanvas = function() {
         var cloudHeight = (screenMessage.length + 3) * lineHeight;
         var canvasElement = document.createElement('canvas');
-
         canvasElement.setAttribute('width', 300);
         canvasElement.setAttribute('height', cloudHeight);
 
         var ctx = canvasElement.getContext('2d');
         drawMessageCloud(ctx, cloudHeight);
-
         canvasElement.classList.add('game-message');
 
         return canvasElement;
       };
 
       var drawMessageCloud = function(ctx, cloudHeight) {
-
         ctx.beginPath();
         ctx.moveTo(10, 10);
         ctx.lineTo(290, 20);
@@ -470,7 +462,6 @@
       };
 
       document.body.appendChild(messageCanvas());
-
     },
 
     /**
