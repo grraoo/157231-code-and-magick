@@ -410,11 +410,11 @@
         for (i; j + i < arrayMsg.length; i++) {
           outputMessage[i] = arrayMsg[i + j];
           for (j; i + j + 1 < arrayMsg.length; j++) {
-              if ((outputMessage[i].length + arrayMsg[i + j + 1].length) < messageWidth) {
-                outputMessage[i] += ' ' + arrayMsg[i + j + 1];
-              } else {
-                break;
-              }
+            if ((outputMessage[i].length + arrayMsg[i + j + 1].length) < messageWidth) {
+              outputMessage[i] += ' ' + arrayMsg[i + j + 1];
+            } else {
+              break;
+            }
           }
         }
         return outputMessage;
@@ -471,7 +471,7 @@
 
       document.body.appendChild(messageCanvas());
 
-  },
+    },
 
     /**
      * Предзагрузка необходимых изображений для уровня.
