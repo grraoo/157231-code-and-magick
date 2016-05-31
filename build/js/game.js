@@ -400,7 +400,6 @@
       var drawMessage = function() {
         var arrayMessage = gameMessage.split(' ');
         var outputMessage = [];
-        
         for (var i = 0, j = 0; j + i < arrayMessage.length; i++) {
           outputMessage[i] = arrayMessage[i + j];
           for (j; i + j + 1 < arrayMessage.length; j++) {
