@@ -394,15 +394,14 @@
           break;
       }
 
-      var messageWidth = 30;
-      var lineHeight = 16;
+      var messageWidth = 25;
+      var lineHeight = 20;
 
       var drawMessage = function() {
         var arrayMessage = gameMessage.split(' ');
         var outputMessage = [];
-        var j = 0;
-        var i = 0;
-        for (i; j + i < arrayMessage.length; i++) {
+        
+        for (var i = 0, j = 0; j + i < arrayMessage.length; i++) {
           outputMessage[i] = arrayMessage[i + j];
           for (j; i + j + 1 < arrayMessage.length; j++) {
             if ((outputMessage[i].length + arrayMessage[i + j + 1].length) < messageWidth) {
@@ -453,7 +452,7 @@
         ctx.fillStyle = 'white';
         ctx.fill();
 
-        ctx.font = '12px "PT Mono"';
+        ctx.font = '16px "PT Mono"';
         ctx.textBaseline = 'hanging';
         ctx.fillStyle = 'black';
         for (var i = 0; i < screenMessage.length; i++) {
