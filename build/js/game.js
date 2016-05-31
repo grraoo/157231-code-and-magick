@@ -378,20 +378,88 @@
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
+      var gameMessage = '';
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          console.log('you have won!');
+          gameMessage = 'Ты всех победил и спас этот мир, правда пока не известно от чего';
           break;
         case Verdict.FAIL:
-          console.log('you have failed!');
+          gameMessage = 'Ты проиграл, и некому больше спасать этот мир!.. R.I.P.';
           break;
         case Verdict.PAUSE:
-          console.log('game is on pause!');
+          gameMessage = 'Самое время выкурить трубочку, и выпить кружечку эля.';
           break;
         case Verdict.INTRO:
-          console.log('welcome to the game! Press Space to start');
+          gameMessage = 'Добро пожаловать в игру! Вперёд к приключениям! Пусть горячие файерболы и левитация помогут тебе!';
           break;
       }
+
+      var messageWidth = 25;
+      var lineHeight = 20;
+
+      var drawMessage = function() {
+        var arrayMessage = gameMessage.split(' ');
+        var outputMessage = [];
+        for (var i = 0, j = 0; j + i < arrayMessage.length; i++) {
+          outputMessage[i] = arrayMessage[i + j];
+          for (j; i + j + 1 < arrayMessage.length; j++) {
+            if ((outputMessage[i].length + arrayMessage[i + j + 1].length) < messageWidth) {
+              outputMessage[i] += ' ' + arrayMessage[i + j + 1];
+            } else {
+              break;
+            }
+          }
+        }
+        return outputMessage;
+      };
+
+      var screenMessage = drawMessage();
+
+      var messageCanvas = function() {
+        var cloudHeight = (screenMessage.length + 3) * lineHeight;
+        var canvasElement = document.createElement('canvas');
+        canvasElement.setAttribute('width', 300);
+        canvasElement.setAttribute('height', cloudHeight);
+
+        var ctx = canvasElement.getContext('2d');
+        drawMessageCloud(ctx, cloudHeight);
+        canvasElement.classList.add('game-message');
+
+        return canvasElement;
+      };
+
+      var drawMessageCloud = function(ctx, cloudHeight) {
+        ctx.beginPath();
+        ctx.moveTo(10, 10);
+        ctx.lineTo(290, 20);
+        ctx.lineTo(300, cloudHeight / 2 + 10);
+        ctx.lineTo(280, cloudHeight - 10);
+        ctx.lineTo(20, cloudHeight);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(280, 10);
+        ctx.lineTo(290, cloudHeight / 2);
+        ctx.lineTo(270, cloudHeight - 20);
+        ctx.lineTo(10, cloudHeight - 10);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fillStyle = 'white';
+        ctx.fill();
+
+        ctx.font = '16px "PT Mono"';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = 'black';
+        for (var i = 0; i < screenMessage.length; i++) {
+          ctx.fillText(screenMessage[i], lineHeight, (1 + i) * lineHeight);
+        }
+      };
+
+      document.body.appendChild(messageCanvas());
     },
 
     /**

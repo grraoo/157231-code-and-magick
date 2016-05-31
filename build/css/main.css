@@ -543,3 +543,12 @@ input[type=radio]:checked + .review-mark-label {
   font-size: 14px;
   color: #ffffff;
 }
+
+.game-message
+{
+  position: absolute;
+left: 130px;
+margin: 0px auto;
+top: 450px;
+right: 0px;
+}
