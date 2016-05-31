@@ -371,6 +371,7 @@
         this.initializeLevelAndStart(this.level, needToRestartTheGame);
 
         window.removeEventListener('keydown', this._pauseListener);
+
       }
     },
 
@@ -382,95 +383,95 @@
       switch (this.state.currentStatus) {
 
         case Verdict.WIN:
-            gameMessage = 'Ты всех победил и спас этот мир, правда пока не известно от чего';
-            break;
+          gameMessage = 'Ты всех победил и спас этот мир, правда пока не известно от чего';
+          break;
         case Verdict.FAIL:
-            gameMessage = 'Ты проиграл, и некому больше спасать этот мир!.. R.I.P.';
-            break;
+          gameMessage = 'Ты проиграл, и некому больше спасать этот мир!.. R.I.P.';
+          break;
         case Verdict.PAUSE:
-            gameMessage = 'Самое время выкурить трубочку, и выпить кружечку эля.';
-            break;
+          gameMessage = 'Самое время выкурить трубочку, и выпить кружечку эля.';
+          break;
         case Verdict.INTRO:
-            gameMessage = 'Добро пожаловать в игру! Вперёд к приключениям! Пусть горячие файерболы и левитация помогут тебе!';
-            break;
+          gameMessage = 'Добро пожаловать в игру! Вперёд к приключениям! Пусть горячие файерболы и левитация помогут тебе!';
+          break;
 
-     }
+      }
 
 
-    var messageWidth = 30;
-    var lineHeight = 16;
+      var messageWidth = 30;
+      var lineHeight = 16;
 
-    var drawMessage = function() {
-      var arrayMsg = gameMessage.split(' ');
-      var outputMessage = [];
-      var j = 0;
-      var i = 0;
-      for (i; j + i < arrayMsg.length; i++) {
-        outputMessage[i] = arrayMsg[i + j];
-        for (j; i + j + 1 < arrayMsg.length; j++) {
-            if ((outputMessage[i].length + arrayMsg[i + j + 1].length) < messageWidth) {
-              outputMessage[i] += ' ' + arrayMsg[i + j + 1];
-            }
-            else {
-              break;
-            }
+
+      var drawMessage = function() {
+        var arrayMsg = gameMessage.split(' ');
+        var outputMessage = [];
+        var j = 0;
+        var i = 0;
+        for (i; j + i < arrayMsg.length; i++) {
+          outputMessage[i] = arrayMsg[i + j];
+          for (j; i + j + 1 < arrayMsg.length; j++) {
+              if ((outputMessage[i].length + arrayMsg[i + j + 1].length) < messageWidth) {
+                outputMessage[i] += ' ' + arrayMsg[i + j + 1];
+              } else {
+                break;
+              }
+          }
         }
-      }
-      return outputMessage;
-    };
+        return outputMessage;
+      };
 
-    var screenMessage = drawMessage();
+      var screenMessage = drawMessage();
 
-    var messageCanvas = function() {
-      var cloudHeight = (screenMessage.length + 3) * lineHeight;
-      var canvasElement = document.createElement('canvas');
+      var messageCanvas = function() {
+        var cloudHeight = (screenMessage.length + 3) * lineHeight;
+        var canvasElement = document.createElement('canvas');
 
-      canvasElement.setAttribute('width', 300);
-      canvasElement.setAttribute('height', cloudHeight);
+        canvasElement.setAttribute('width', 300);
+        canvasElement.setAttribute('height', cloudHeight);
 
-      var ctx = canvasElement.getContext('2d');
-      drawMessageCloud(ctx, cloudHeight);
+        var ctx = canvasElement.getContext('2d');
+        drawMessageCloud(ctx, cloudHeight);
 
-      canvasElement.classList.add('game-message');
+        canvasElement.classList.add('game-message');
 
-      return canvasElement;
-    };
+        return canvasElement;
+      };
 
-    var drawMessageCloud = function(ctx, cloudHeight) {
+      var drawMessageCloud = function(ctx, cloudHeight) {
 
-      ctx.beginPath();
-      ctx.moveTo(10, 10);
-      ctx.lineTo(290, 20);
-      ctx.lineTo(300, cloudHeight / 2 + 10);
-      ctx.lineTo(280, cloudHeight - 10);
-      ctx.lineTo(20, cloudHeight);
-      ctx.closePath();
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-      ctx.fill();
-      ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(10, 10);
+        ctx.lineTo(290, 20);
+        ctx.lineTo(300, cloudHeight / 2 + 10);
+        ctx.lineTo(280, cloudHeight - 10);
+        ctx.lineTo(20, cloudHeight);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.fill();
+        ctx.stroke();
 
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.lineTo(280, 10);
-      ctx.lineTo(290, cloudHeight / 2);
-      ctx.lineTo(270, cloudHeight - 20);
-      ctx.lineTo(10, cloudHeight - 10);
-      ctx.closePath();
-      ctx.stroke();
-      ctx.fillStyle = 'white';
-      ctx.fill();
-    
-      ctx.font = '12px "PT Mono"';
-      ctx.textBaseline = 'hanging';
-      ctx.fillStyle = 'black';
-      for (var i = 0; i < screenMessage.length; i++) {
-        ctx.fillText(screenMessage[i], lineHeight, (1 + i) * lineHeight);
-      }
-    };
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(280, 10);
+        ctx.lineTo(290, cloudHeight / 2);
+        ctx.lineTo(270, cloudHeight - 20);
+        ctx.lineTo(10, cloudHeight - 10);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.fillStyle = 'white';
+        ctx.fill();
 
-    document.body.appendChild(messageCanvas());
+        ctx.font = '12px "PT Mono"';
+        ctx.textBaseline = 'hanging';
+        ctx.fillStyle = 'black';
+        for (var i = 0; i < screenMessage.length; i++) {
+          ctx.fillText(screenMessage[i], lineHeight, (1 + i) * lineHeight);
+        }
+      };
 
- },
+      document.body.appendChild(messageCanvas());
+
+  },
 
     /**
      * Предзагрузка необходимых изображений для уровня.
