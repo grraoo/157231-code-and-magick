@@ -395,7 +395,7 @@
       }
 
       var messageWidth = 25;
-      var lineHeight = 20;
+      var lineHeight = 22;
 
       var drawMessage = function() {
         var arrayMessage = gameMessage.split(' ');
@@ -416,7 +416,7 @@
       var screenMessage = drawMessage();
 
       var messageCanvas = function() {
-        var cloudHeight = (screenMessage.length + 3) * lineHeight;
+        var cloudHeight = (screenMessage.length + 2) * lineHeight;
         var canvasElement = document.createElement('canvas');
         canvasElement.setAttribute('width', 300);
         canvasElement.setAttribute('height', cloudHeight);
