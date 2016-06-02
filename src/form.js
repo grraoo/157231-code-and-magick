@@ -15,3 +15,18 @@
     formContainer.classList.add('invisible');
   };
 })();
+
+
+var reviewMarks = document.querySelectorAll('input[name="review-mark"]');
+var reviewText = document.querySelector('#review-text');
+
+for (var i = 0; i < 5; i++) {
+  reviewMarks[i].onchange = function() {
+    var currentReviewMark = document.querySelector('input[name="review-mark"]:checked');
+    if (currentReviewMark.value < 3) {
+      reviewText.setAttribute('required', 'required');
+    } else {
+      reviewText.removeAttribute('required');
+    }
+  };
+}
