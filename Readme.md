@@ -1,7 +1,7 @@
 ﻿# Личный проект «Код и Магия» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Михаил Косымов](https://up.htmlacademy.ru/javascript/5/user/157231).
-* Наставник: [Alexander Myadzel](https://htmlacademy.ru/profile/id124304).
+* Наставник: [Сергей Вейт](https://htmlacademy.ru/profile/id159432).
 
 ---
 
