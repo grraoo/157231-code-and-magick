@@ -25,20 +25,22 @@ var reviewSubmit = document.querySelector('.review-submit');
 
 
 var noNeedName = function() {
-  var isNotEmptyName = (reviewInput[0].value !== '');
-  return isNotEmptyName;
+
+  return (reviewInput[0].value !== '');
 };
 
 var noNeedText = function() {
+
   if (reviewInput[1].hasAttribute('required')) {
-    var isNotEmptyText = (reviewInput[1].value !== '');
-    return isNotEmptyText;
-  } else {
-    return true;
+
+    return (reviewInput[1].value !== '');
   }
+
+  return true;
 };
 
 var showHideReviewFields = function() {
+
   if (noNeedName() && noNeedText()) {
     reviewFields.classList.add('invisible');
     reviewSubmit.removeAttribute('disabled');
@@ -51,15 +53,18 @@ var showHideReviewFields = function() {
 for (var i = 0; i < 5; i++) {
   reviewMarks[i].onchange = function() {
     currentReviewMark = document.querySelector('input[name="review-mark"]:checked');
+
     if (currentReviewMark.value < 3) {
       reviewInput[1].setAttribute('required', 'required');
       reviewFieldsLabel[1].classList.remove('invisible');
       reviewFields.classList.remove('invisible');
+      showHideLabels();
     } else {
       reviewInput[1].removeAttribute('required');
       reviewFieldsLabel[1].classList.add('invisible');
       showHideReviewFields();
     }
+
     if (!noNeedName()) {
       reviewFields.classList.remove('invisible');
       reviewFieldsLabel[0].classList.remove('invisible');
@@ -80,7 +85,8 @@ if (currentReviewMark.value > 2) {
   showHideReviewFields();
 }
 
-var fieldState = function() {
+var showHideLabels = function() {
+
   if (!noNeedName()) {
     reviewFields.classList.remove('invisible');
     reviewFieldsLabel[0].classList.remove('invisible');
@@ -98,8 +104,8 @@ var fieldState = function() {
   }
 };
 
-fieldState();
+showHideLabels();
 
 for (i = 0; i < 2; i++) {
-  reviewInput[i].oninput = fieldState;
+  reviewInput[i].oninput = showHideLabels;
 }
