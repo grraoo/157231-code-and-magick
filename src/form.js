@@ -27,17 +27,12 @@ var validationMessages = document.querySelectorAll('.validation-message');
 
 var noNeedName = function() {
 
-  return (reviewInput[0].value !== '');
+  return reviewInput[0].validity.valid;
 };
 
 var noNeedText = function() {
 
-  if (reviewInput[1].hasAttribute('required')) {
-
-    return (reviewInput[1].value !== '');
-  }
-
-  return true;
+  return reviewInput[1].validity.valid;
 };
 
 var showHideReviewFields = function() {
