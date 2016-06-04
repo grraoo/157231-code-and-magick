@@ -22,6 +22,7 @@ var reviewFields = document.querySelector('.review-fields');
 var currentReviewMark = document.querySelector('input[name="review-mark"]:checked');
 var reviewInput = [document.querySelector('#review-name'), document.querySelector('#review-text')];
 var reviewSubmit = document.querySelector('.review-submit');
+var validationMessages = document.querySelectorAll('.validation-message');
 
 
 var noNeedName = function() {
@@ -57,19 +58,23 @@ for (var i = 0; i < 5; i++) {
     if (currentReviewMark.value < 3) {
       reviewInput[1].setAttribute('required', 'required');
       reviewFieldsLabel[1].classList.remove('invisible');
+      validationMessages[1].classList.remove('invisible');
       reviewFields.classList.remove('invisible');
       showHideLabels();
     } else {
       reviewInput[1].removeAttribute('required');
       reviewFieldsLabel[1].classList.add('invisible');
+      validationMessages[1].classList.add('invisible');
       showHideReviewFields();
     }
 
     if (!noNeedName()) {
       reviewFields.classList.remove('invisible');
       reviewFieldsLabel[0].classList.remove('invisible');
+      validationMessages[0].classList.remove('invisible');
     } else {
       reviewFieldsLabel[0].classList.add('invisible');
+      validationMessages[0].classList.add('invisible');
       showHideReviewFields();
     }
   };
@@ -78,10 +83,12 @@ for (var i = 0; i < 5; i++) {
 if (currentReviewMark.value > 2) {
   reviewInput[1].removeAttribute('required');
   reviewFieldsLabel[1].classList.add('invisible');
+  validationMessages[1].classList.add('invisible');
   showHideReviewFields();
 } else {
   reviewInput[1].setAttribute('required', 'required');
   reviewFieldsLabel[1].classList.remove('invisible');
+  validationMessages[1].classList.remove('invisible');
   showHideReviewFields();
 }
 
@@ -90,16 +97,20 @@ var showHideLabels = function() {
   if (!noNeedName()) {
     reviewFields.classList.remove('invisible');
     reviewFieldsLabel[0].classList.remove('invisible');
+    validationMessages[0].classList.remove('invisible');
   } else {
     reviewFieldsLabel[0].classList.add('invisible');
+    validationMessages[0].classList.add('invisible');
     showHideReviewFields();
   }
 
   if (!noNeedText()) {
     reviewFields.classList.remove('invisible');
     reviewFieldsLabel[1].classList.remove('invisible');
+    validationMessages[1].classList.remove('invisible');
   } else {
     reviewFieldsLabel[1].classList.add('invisible');
+    validationMessages[1].classList.add('invisible');
     showHideReviewFields();
   }
 };
