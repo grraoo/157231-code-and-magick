@@ -35,7 +35,12 @@ var noNeedText = function() {
   return reviewInput[1].validity.valid;
 };
 
-var showHideReviewFields = function() {
+var noNeedToFill = function() {
+
+  return [noNeedName(), noNeedText()];
+};
+
+var allowForbidSubmit = function() {
 
   if (noNeedName() && noNeedText()) {
     reviewFields.classList.add('invisible');
@@ -60,17 +65,17 @@ for (var i = 0; i < 5; i++) {
       reviewInput[1].removeAttribute('required');
       reviewFieldsLabel[1].classList.add('invisible');
       validationMessages[1].classList.add('invisible');
-      showHideReviewFields();
+      allowForbidSubmit();
     }
 
-    if (!noNeedName()) {
+    if (noNeedName()) {
+      reviewFieldsLabel[0].classList.add('invisible');
+      validationMessages[0].classList.add('invisible');
+      allowForbidSubmit();
+    } else {
       reviewFields.classList.remove('invisible');
       reviewFieldsLabel[0].classList.remove('invisible');
       validationMessages[0].classList.remove('invisible');
-    } else {
-      reviewFieldsLabel[0].classList.add('invisible');
-      validationMessages[0].classList.add('invisible');
-      showHideReviewFields();
     }
   };
 }
@@ -79,34 +84,27 @@ if (currentReviewMark.value > 2) {
   reviewInput[1].removeAttribute('required');
   reviewFieldsLabel[1].classList.add('invisible');
   validationMessages[1].classList.add('invisible');
-  showHideReviewFields();
+  allowForbidSubmit();
 } else {
   reviewInput[1].setAttribute('required', 'required');
   reviewFieldsLabel[1].classList.remove('invisible');
   validationMessages[1].classList.remove('invisible');
-  showHideReviewFields();
+  allowForbidSubmit();
 }
 
 var showHideLabels = function() {
 
-  if (!noNeedName()) {
-    reviewFields.classList.remove('invisible');
-    reviewFieldsLabel[0].classList.remove('invisible');
-    validationMessages[0].classList.remove('invisible');
-  } else {
-    reviewFieldsLabel[0].classList.add('invisible');
-    validationMessages[0].classList.add('invisible');
-    showHideReviewFields();
-  }
+  for (i = 0; i < 2; i++) {
 
-  if (!noNeedText()) {
-    reviewFields.classList.remove('invisible');
-    reviewFieldsLabel[1].classList.remove('invisible');
-    validationMessages[1].classList.remove('invisible');
-  } else {
-    reviewFieldsLabel[1].classList.add('invisible');
-    validationMessages[1].classList.add('invisible');
-    showHideReviewFields();
+    if (noNeedToFill()[i]) {
+      reviewFieldsLabel[i].classList.add('invisible');
+      validationMessages[i].classList.add('invisible');
+      allowForbidSubmit();
+    } else {
+      reviewFields.classList.remove('invisible');
+      reviewFieldsLabel[i].classList.remove('invisible');
+      validationMessages[i].classList.remove('invisible');
+    }
   }
 };
 
