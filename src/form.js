@@ -25,22 +25,18 @@ var reviewSubmit = document.querySelector('.review-submit');
 var validationMessages = document.querySelectorAll('.validation-message');
 
 var noNeedName = function() {
-
   return reviewInput[0].validity.valid;
 };
 
 var noNeedText = function() {
-
   return reviewInput[1].validity.valid;
 };
 
 var noNeedToFill = function() {
-
   return [noNeedName(), noNeedText()];
 };
 
 var allowForbidSubmit = function() {
-
   if (noNeedName() && noNeedText()) {
     reviewFields.classList.add('invisible');
     reviewSubmit.removeAttribute('disabled');
@@ -51,9 +47,7 @@ var allowForbidSubmit = function() {
 };
 
 var showHideLabels = function() {
-
   for (i = 0; i < 2; i++) {
-
     if (noNeedToFill()[i]) {
       reviewFieldsLabel[i].classList.add('invisible');
       validationMessages[i].classList.add('invisible');
