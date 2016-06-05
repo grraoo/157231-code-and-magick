@@ -50,47 +50,6 @@ var allowForbidSubmit = function() {
   }
 };
 
-for (var i = 0; i < 5; i++) {
-  reviewMarks[i].onchange = function() {
-    currentReviewMark = document.querySelector('input[name="review-mark"]:checked');
-
-    if (currentReviewMark.value < 3) {
-      reviewInput[1].setAttribute('required', 'required');
-      reviewFieldsLabel[1].classList.remove('invisible');
-      validationMessages[1].classList.remove('invisible');
-      reviewFields.classList.remove('invisible');
-      showHideLabels();
-    } else {
-      reviewInput[1].removeAttribute('required');
-      reviewFieldsLabel[1].classList.add('invisible');
-      validationMessages[1].classList.add('invisible');
-      allowForbidSubmit();
-    }
-
-    if (noNeedName()) {
-      reviewFieldsLabel[0].classList.add('invisible');
-      validationMessages[0].classList.add('invisible');
-      allowForbidSubmit();
-    } else {
-      reviewFields.classList.remove('invisible');
-      reviewFieldsLabel[0].classList.remove('invisible');
-      validationMessages[0].classList.remove('invisible');
-    }
-  };
-}
-
-if (currentReviewMark.value > 2) {
-  reviewInput[1].removeAttribute('required');
-  reviewFieldsLabel[1].classList.add('invisible');
-  validationMessages[1].classList.add('invisible');
-  allowForbidSubmit();
-} else {
-  reviewInput[1].setAttribute('required', 'required');
-  reviewFieldsLabel[1].classList.remove('invisible');
-  validationMessages[1].classList.remove('invisible');
-  allowForbidSubmit();
-}
-
 var showHideLabels = function() {
 
   for (i = 0; i < 2; i++) {
@@ -98,16 +57,30 @@ var showHideLabels = function() {
     if (noNeedToFill()[i]) {
       reviewFieldsLabel[i].classList.add('invisible');
       validationMessages[i].classList.add('invisible');
-      allowForbidSubmit();
     } else {
-      reviewFields.classList.remove('invisible');
       reviewFieldsLabel[i].classList.remove('invisible');
       validationMessages[i].classList.remove('invisible');
     }
+    allowForbidSubmit();
   }
 };
 
-showHideLabels();
+var setRequiredText = function() {
+  currentReviewMark = document.querySelector('input[name="review-mark"]:checked');
+
+  if (currentReviewMark.value > 2) {
+    reviewInput[1].removeAttribute('required');
+  } else {
+    reviewInput[1].setAttribute('required', 'required');
+  }
+  showHideLabels();
+};
+
+setRequiredText();
+
+for (var i = 0; i < 5; i++) {
+  reviewMarks[i].onchange = setRequiredText;
+}
 
 for (i = 0; i < 2; i++) {
   reviewInput[i].oninput = showHideLabels;
