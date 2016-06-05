@@ -22,7 +22,7 @@ var reviewFields = document.querySelector('.review-fields');
 var currentReviewMark = document.querySelector('input[name="review-mark"]:checked');
 var reviewInput = [document.querySelector('#review-name'), document.querySelector('#review-text')];
 var reviewSubmit = document.querySelector('.review-submit');
-var validationMessages = document.querySelectorAll('.validation-message');
+var validationMessageBox = document.querySelectorAll('.validation-message');
 
 var noNeedName = function() {
   return reviewInput[0].validity.valid;
@@ -50,10 +50,10 @@ var showHideLabels = function() {
   for (i = 0; i < 2; i++) {
     if (noNeedToFill()[i]) {
       reviewFieldsLabel[i].classList.add('invisible');
-      validationMessages[i].classList.add('invisible');
+      validationMessageBox[i].innerHTML = '';
     } else {
       reviewFieldsLabel[i].classList.remove('invisible');
-      validationMessages[i].classList.remove('invisible');
+      validationMessageBox[i].innerHTML = reviewInput[i].validationMessage;
     }
     allowForbidSubmit();
   }
