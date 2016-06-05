@@ -24,7 +24,6 @@ var reviewInput = [document.querySelector('#review-name'), document.querySelecto
 var reviewSubmit = document.querySelector('.review-submit');
 var validationMessages = document.querySelectorAll('.validation-message');
 
-
 var noNeedName = function() {
 
   return reviewInput[0].validity.valid;
