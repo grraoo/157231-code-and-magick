@@ -19,7 +19,7 @@
 var reviewMarks = document.querySelectorAll('input[name="review-mark"]');
 var reviewFieldsLabel = document.querySelectorAll('.review-fields-label');
 var reviewFields = document.querySelector('.review-fields');
-var currentReviewMark = document.querySelector('input[name="review-mark"]:checked');
+var currentReviewMark;
 var reviewInput = [document.querySelector('#review-name'), document.querySelector('#review-text')];
 var reviewSubmit = document.querySelector('.review-submit');
 var validationMessageBox = document.querySelectorAll('.validation-message');
