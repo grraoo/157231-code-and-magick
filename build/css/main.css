@@ -416,6 +416,8 @@ footer p {
 }
 
 .review-form-group {
+  position: relative;
+
   margin: 0;
   margin-bottom: 15px;
   padding: 0;
@@ -547,8 +549,23 @@ input[type=radio]:checked + .review-mark-label {
 .game-message
 {
   position: absolute;
-left: 130px;
-margin: 0px auto;
-top: 450px;
-right: 0px;
+  left: 160px;
+  margin: 0px auto;
+  top: 420px;
+  right: 0px;
+}
+
+.validation-message
+{
+  font-size: 12px;
+  color: rgb(224, 248, 0);
+  text-shadow: 0px 0px 3px white;
+  position: absolute;
+  bottom: -17px;
+  left: 0;
+}
+
+.text-validation
+{
+ bottom: -14px;
 }
