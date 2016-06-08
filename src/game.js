@@ -414,21 +414,13 @@
       };
 
       var screenMessage = drawMessage();
+      var canvasElement = document.querySelector('.game-message');
+      var cloudHeight = (screenMessage.length + 2) * lineHeight;
+      canvasElement.setAttribute('width', 300);
+      canvasElement.setAttribute('height', cloudHeight);
+      var ctx = canvasElement.getContext('2d');
 
-      var messageCanvas = function() {
-        var cloudHeight = (screenMessage.length + 2) * lineHeight;
-        var canvasElement = document.createElement('canvas');
-        canvasElement.setAttribute('width', 300);
-        canvasElement.setAttribute('height', cloudHeight);
-
-        var ctx = canvasElement.getContext('2d');
-        drawMessageCloud(ctx, cloudHeight);
-        canvasElement.classList.add('game-message');
-
-        return canvasElement;
-      };
-
-      var drawMessageCloud = function(ctx, cloudHeight) {
+      var drawMessageCloud = function() {
         ctx.beginPath();
         ctx.moveTo(10, 10);
         ctx.lineTo(290, 20);
@@ -459,7 +451,7 @@
         }
       };
 
-      document.body.appendChild(messageCanvas());
+      drawMessageCloud(ctx, cloudHeight);
     },
 
     /**
