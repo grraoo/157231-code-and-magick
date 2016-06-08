@@ -42,7 +42,7 @@ form.onsubmit = function() {
     cookiesLiveTime = dayNumberMs - BIRTH_DAY_NUMBER;
   }
   expDate = new Date(+date + cookiesLiveTime);
-  cookies.set('username', reviewInput[0].value, {expires: expDate});
+  cookies.set('username', reviewInput[0].value, {'expires': expDate});
 };
 
 reviewInput[0].value = cookies.get('username');
