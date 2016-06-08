@@ -26,13 +26,19 @@ var reviewSubmit = document.querySelector('.review-submit');
 var validationMessageBox = document.querySelectorAll('.validation-message');
 
 var cookies = require('browser-cookies');
+var date = new Date();
 var MS_IN_DAY = 60 * 60 * 24 * 1000;
-var BIRTH_DAY_NUMBER = 271 * MS_IN_DAY;
+var BIRTH_DAY_NUMBER;
 var TIME_AFTER_BIRTHDAY = 94 * MS_IN_DAY;
 var dayNumberMs;
 var cookiesLiveTime;
-var date = new Date();
 var expDate;
+
+if (date.getFullYear() % 4) {
+  BIRTH_DAY_NUMBER = 271 * MS_IN_DAY;
+} else {
+  BIRTH_DAY_NUMBER = 272 * MS_IN_DAY;
+}
 
 form.onsubmit = function() {
   dayNumberMs = (date % (365.25 * MS_IN_DAY));

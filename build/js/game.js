@@ -19,8 +19,7 @@
    */
   var Level = {
     'INTRO': 0,
-    'MOVE_LEFT': 1,
-    'MOVE_RIGHT': 2,
+    'MOVE_LEFT': 1, 'MOVE_RIGHT': 2,
     'LEVITATE': 3,
     'HIT_THE_MARK': 4
   };
