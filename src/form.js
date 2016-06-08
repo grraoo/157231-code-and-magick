@@ -30,7 +30,8 @@ var date = new Date();
 var MS_IN_DAY = 60 * 60 * 24 * 1000;
 var BIRTH_DAY_NUMBER;
 var TIME_AFTER_BIRTHDAY = 94 * MS_IN_DAY;
-var dayNumberMs;
+var newYearDate = new Date(date.getFullYear(), 0, 1);
+var dayNumberMs = date - newYearDate;
 var cookiesLiveTime;
 var expDate;
 
@@ -41,7 +42,6 @@ if (date.getFullYear() % 4) {
 }
 
 form.onsubmit = function() {
-  dayNumberMs = (date % (365.25 * MS_IN_DAY));
   if (dayNumberMs < BIRTH_DAY_NUMBER) {
     cookiesLiveTime = dayNumberMs + TIME_AFTER_BIRTHDAY;
   } else {
