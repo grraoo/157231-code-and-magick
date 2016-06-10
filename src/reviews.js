@@ -10,8 +10,6 @@ var templateElement = document.querySelector('template');
 var reviewsContainer = document.querySelector('.reviews-list');
 var IMAGE_LOAD_TIMEOUT = 10000;
 var elementToClone;
-var mainJs;
-var newScript;
 
 reviewFilters.classList.add('invisible');
 
@@ -21,7 +19,7 @@ if ('content' in templateElement) {
   elementToClone = templateElement.querySelector('.review');
 }
 
-var getReviewElement = function(data, container) {
+window.getReviewElement = function(data, container) {
   var element = elementToClone.cloneNode(true);
   container.appendChild(element);
 
@@ -33,11 +31,6 @@ var getReviewElement = function(data, container) {
   var userPhoto = new Image(124, 124);
   var imageLoadTimeout;
 
-  userPhoto.src = data.author.picture;
-  element.querySelector('.review-author').src = userPhoto.src;
-  element.querySelector('.review-author').title = data.author.name;
-  element.querySelector('.review-author').alt = data.author.name;
-
   userPhoto.onerror = function() {
     element.classList.add('review-load-failure');
   };
@@ -45,6 +38,11 @@ var getReviewElement = function(data, container) {
   userPhoto.onload = function() {
     clearTimeout(imageLoadTimeout);
   };
+
+  userPhoto.src = data.author.picture;
+  element.querySelector('.review-author').src = userPhoto.src;
+  element.querySelector('.review-author').title = data.author.name;
+  element.querySelector('.review-author').alt = data.author.name;
 
   imageLoadTimeout = setTimeout(function() {
     userPhoto.src = '';
@@ -54,23 +52,9 @@ var getReviewElement = function(data, container) {
   return element;
 };
 
-var buildReviewList = function() {
+window.buildReviewList = function() {
   reviews.forEach(function(review) {
     getReviewElement(review, reviewsContainer);
   });
   reviewFilters.classList.remove('invisible');
 };
-
-var getJsonpRequest = function(jsonpSource, jsonpFunction) {
-  mainJs = document.querySelector('script[src="js/main.js"]');
-
-  newScript = document.createElement('script');
-  newScript.type = 'text/javascript';
-  newScript.src = '//up.htmlacademy.ru/assets/js_intensive/jsonp/reviews.js';
-
-  document.body.insertBefore(newScript, mainJs);
-
-  newScript.onload = jsonpFunction;
-};
-
-getJsonpRequest('//up.htmlacademy.ru/assets/js_intensive/jsonp/reviews.js', buildReviewList);
