@@ -41,12 +41,10 @@ var getReviewElement = function(data, container) {
   userPhoto.onerror = function() {
     element.classList.add('review-load-failure');
   };
-  
+
   userPhoto.onload = function() {
     clearTimeout(imageLoadTimeout);
   };
-  
-
 
   imageLoadTimeout = setTimeout(function() {
     userPhoto.src = '';
