@@ -54,7 +54,7 @@ window.getReviewElement = function(data, container) {
 
 window.buildReviewList = function() {
   reviews.forEach(function(review) {
-    getReviewElement(review, reviewsContainer);
+    window.getReviewElement(review, reviewsContainer);
   });
   reviewFilters.classList.remove('invisible');
 };
