@@ -194,6 +194,7 @@ main {
   cursor: pointer;
 }
 
+
 .reviews-filter input {
   position: absolute;
   left: -1200em;
@@ -211,6 +212,14 @@ input[type=radio]:checked + .reviews-filter-item {
   border-bottom: solid 2px;
   box-shadow: 3px 3px 0 #000000;
   cursor: auto;
+}
+
+.disabled-label {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default;
+  text-shadow: 0 0 10px #fff;
+  border-bottom: none;
 }
 
 .review {
