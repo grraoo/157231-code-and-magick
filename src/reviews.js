@@ -29,6 +29,13 @@ var goodReviews = [];
 var badReviews = [];
 var popularReviews = [];
 
+var reviewsMore = document.querySelector('.reviews-controls-more');
+var PAGE_SIZE = 3;
+var pageNumber = 0;
+var isNextPageNotAvailable = function(reviews, page, pageSize) {
+  return page >= Math.ceil(reviews.length / pageSize);
+};
+
 
 reviewFilters.classList.add('invisible');
 
@@ -71,8 +78,12 @@ var getReviewElement = function(data, container) {
   return element;
 };
 
-var buildReviewList = function(data) {
-  data.forEach(function(review) {
+var buildReviewList = function(reviewList, page) {
+  
+  var from = page * PAGE_SIZE;
+  var to = from + PAGE_SIZE;
+
+  reviewList.slice(from, to).forEach(function(review) {
     getReviewElement(review, reviewsContainer);
   });
   reviewFilters.classList.remove('invisible');
@@ -170,14 +181,28 @@ var getReviewsFiltered = function(filter) {
       break;
   }
 
-  buildReviewList(reviewsFiltered);
+  buildReviewList(reviewsFiltered, pageNumber);
 };
 
 for (var i = 0; i < filters.length; i++) {
   filters[i].onchange = function(filter) {
-    filter = filters[i];
+    reviewsMore.classList.remove('invisible');
+    pageNumber = 0;
+    filter = this;
     getReviewsFiltered(filter);
   };
 }
-
+reviewsMore.classList.remove('invisible');
 buildFilteredReviews();
+
+
+var showCurrentPage = function(evt) {
+  pageNumber++;
+  if(isNextPageNotAvailable(reviewsFiltered, pageNumber+1, PAGE_SIZE)) {
+    reviewsMore.classList.add('invisible');
+  }
+  console.log(pageNumber);
+  buildReviewList(reviewsFiltered, pageNumber);
+};
+
+reviewsMore.addEventListener('click', showCurrentPage);
