@@ -7,7 +7,6 @@ var elementToClone;
 
 var reviewsBlock = document.querySelector('.reviews');
 var reviewFilters = document.querySelector('.reviews-filter');
-var filters = document.querySelectorAll('input[name="reviews"]');
 var FilterNames = {
   'ALL': 'reviews-all',
   'RECENT': 'reviews-recent',
@@ -19,10 +18,11 @@ var defaultLabelTExt = ['Все', 'Недавние', 'Хорошие', 'Пло�
 var filterLabels = reviewFilters.querySelectorAll('label');
 
 var MS_IN_FOUR_DAYS = 60 * 60 * 24 * 1000 * 4;
-var DEFAULT_FILTER = document.querySelector('#reviews-all');
+var DEFAULT_FILTER = document.querySelector('input[name = "reviews"]:checked').id;
 var REVIEWS_LOAD_URL = '//o0.github.io/assets/json/reviews.json';
 
 var reviews = [];
+var allReviews = [];
 var reviewsFiltered;
 var recentReviews = [];
 var goodReviews = [];
@@ -115,11 +115,12 @@ var getReviewList = function(callback) {
   xhr.send();
 };
 
-var buildFilteredReviews = function() {
-  getReviewList(function(data) {
-    reviews = data;
-    getReviewsFiltered(DEFAULT_FILTER);
-  });
+var showCurrentPage = function() {
+  pageNumber++;
+  if(isNextPageNotAvailable(reviewsFiltered, pageNumber + 1, PAGE_SIZE)) {
+    reviewsMore.classList.add('invisible');
+  }
+  buildReviewList(reviewsFiltered, pageNumber);
 };
 
 var validateFilters = function() {
@@ -127,6 +128,7 @@ var validateFilters = function() {
     filterLabels[i].innerHTML = defaultLabelTExt[i];
   }
   var reviewsToFilter = reviews.slice(0);
+  allReviews = reviews.slice(0);
   recentReviews = reviewsToFilter.filter(function(review) {
     return (Date.now() - Date.parse(review.date) <= MS_IN_FOUR_DAYS) && (Date.now() >= Date.parse(review.date));
   }).sort(function(a, b) {
@@ -151,7 +153,7 @@ var getReviewsFiltered = function(filter) {
   validateFilters();
   var reviewsAll = reviews.slice(0);
   var filterContent = [reviewsAll.length, recentReviews.length, goodReviews.length, badReviews.length, popularReviews.length];
-  for (i = 0; i < filterContent.length; i++) {
+  for (var i = 0; i < filterContent.length; i++) {
     if (!filterContent[i]) {
       filterLabels[i].classList.add('disabled-label');
     }
@@ -161,11 +163,12 @@ var getReviewsFiltered = function(filter) {
     filterLabels[i].innerHTML += '<sup>(' + filterContent[i] + ')</sup>';
   }
 
-  filter = document.querySelector('input[name="reviews"]:checked');
+  var currentFilter = filter;
   reviewsContainer.innerHTML = '';
-  switch (filter.value) {
+
+  switch (currentFilter) {
     case FilterNames.ALL:
-      reviewsFiltered = reviews.slice(0);
+      reviewsFiltered = allReviews;
       break;
     case FilterNames.RECENT:
       reviewsFiltered = recentReviews;
@@ -184,25 +187,25 @@ var getReviewsFiltered = function(filter) {
   buildReviewList(reviewsFiltered, pageNumber);
 };
 
-for (var i = 0; i < filters.length; i++) {
-  filters[i].onchange = function(filter) {
-    reviewsMore.classList.remove('invisible');
-    pageNumber = 0;
-    filter = this;
-    getReviewsFiltered(filter);
-  };
-}
-reviewsMore.classList.remove('invisible');
-buildFilteredReviews();
-
-
-var showCurrentPage = function() {
-  pageNumber++;
-  if(isNextPageNotAvailable(reviewsFiltered, pageNumber + 1, PAGE_SIZE)) {
-    reviewsMore.classList.add('invisible');
-  }
-  console.log(pageNumber);
-  buildReviewList(reviewsFiltered, pageNumber);
+var enableFilter = function(filter) {
+  reviewsMore.classList.remove('invisible');
+  pageNumber = 0;
+  getReviewsFiltered(filter);
 };
 
-reviewsMore.addEventListener('click', showCurrentPage);
+var buildFilteredReviews = function() {
+  reviewsMore.classList.remove('invisible');
+  getReviewList(function(data) {
+    reviews = data;
+    getReviewsFiltered(DEFAULT_FILTER);
+  });
+  reviewsMore.addEventListener('click', showCurrentPage);
+
+  reviewFilters.addEventListener('click', function(evt) {
+    if(evt.target.classList.contains('reviews-filter-item')) {
+      enableFilter(evt.target.getAttribute('for'));
+    }
+  });
+};
+
+buildFilteredReviews();
