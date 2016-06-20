@@ -32,8 +32,8 @@ var popularReviews = [];
 var reviewsMore = document.querySelector('.reviews-controls-more');
 var PAGE_SIZE = 3;
 var pageNumber = 0;
-var isNextPageNotAvailable = function(reviews, page, pageSize) {
-  return page >= Math.ceil(reviews.length / pageSize);
+var isNextPageNotAvailable = function(reviewList, page, pageSize) {
+  return page >= Math.ceil(reviewList.length / pageSize);
 };
 
 
@@ -79,7 +79,7 @@ var getReviewElement = function(data, container) {
 };
 
 var buildReviewList = function(reviewList, page) {
-  
+
   var from = page * PAGE_SIZE;
   var to = from + PAGE_SIZE;
 
@@ -196,9 +196,9 @@ reviewsMore.classList.remove('invisible');
 buildFilteredReviews();
 
 
-var showCurrentPage = function(evt) {
+var showCurrentPage = function() {
   pageNumber++;
-  if(isNextPageNotAvailable(reviewsFiltered, pageNumber+1, PAGE_SIZE)) {
+  if(isNextPageNotAvailable(reviewsFiltered, pageNumber + 1, PAGE_SIZE)) {
     reviewsMore.classList.add('invisible');
   }
   console.log(pageNumber);
