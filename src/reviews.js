@@ -160,7 +160,10 @@ var getReviewsFiltered = function(filter) {
   }
 
   for (i = 0; i < filterLabels.length; i++) {
-    filterLabels[i].innerHTML += '<sup>(' + filterContent[i] + ')</sup>';
+    var sup = document.createElement('sup');
+    sup.innerHTML = '(' + filterContent[i] + ')';
+    sup.classList.add('reviewsNumber');
+    filterLabels[i].appendChild(sup);
   }
 
   var currentFilter = filter;
@@ -202,8 +205,12 @@ var buildFilteredReviews = function() {
   reviewsMore.addEventListener('click', showCurrentPage);
 
   reviewFilters.addEventListener('click', function(evt) {
-    if(evt.target.classList.contains('reviews-filter-item')) {
-      enableFilter(evt.target.getAttribute('for'));
+    var clickTarget = evt.target;
+    if(evt.target.tagName.toLowerCase() === 'sup') {
+      clickTarget = evt.target.parentElement;
+    }
+    if(clickTarget.classList.contains('reviews-filter-item')) {
+      enableFilter(clickTarget.getAttribute('for'));
     }
   });
 };
