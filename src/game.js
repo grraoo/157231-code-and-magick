@@ -1,5 +1,15 @@
 'use strict';
 
+var throttle = function(callback, elem, throttleDelay) {
+  var lastCall = Date.now();
+  window.addEventListener('scroll', function() {
+    if (Date.now() - lastCall >= throttleDelay) {
+      lastCall = Date.now();
+      callback(elem);
+    }
+  });
+};
+
 (function() {
   /**
    * @const
@@ -744,4 +754,36 @@
   var game = new Game(document.querySelector('.demo'));
   game.initializeLevelAndStart();
   game.setGameStatus(window.Game.Verdict.INTRO);
+
+  var demoBlock = document.querySelector('.demo');
+
+  var optimizedScroll = throttle(function(elem) {
+    if (!isVisible(elem)) {
+      game.setGameStatus(window.Game.Verdict.PAUSE);
+    }
+  }, demoBlock, 100);
+
+  window.addEventListener('scroll', optimizedScroll);
 })();
+
+var headerClouds = document.querySelector('.header-clouds');
+
+var isVisible = function(elem) {
+  var elemPosition = elem.getBoundingClientRect().bottom;
+  return elemPosition > 0;
+};
+
+var parallaxClouds = function() {
+if(isVisible(headerClouds)) {
+    headerClouds.style.backgroundPosition = (window.innerWidth - 1024) / 2 + window.pageYOffset + 'px';
+  }
+};
+
+window.addEventListener('resize', parallaxClouds);
+
+var optimizedParallax = function() {
+  throttle(isVisible, headerClouds, 100);
+  parallaxClouds();
+};
+
+window.addEventListener('scroll', optimizedParallax);
