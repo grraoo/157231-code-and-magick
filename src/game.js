@@ -773,7 +773,6 @@ var isVisible = function(elem) {
   return elemPosition > 0;
 };
 
-<<<<<<< HEAD
 var parallaxClouds = function() {
   if(isVisible(headerClouds)) {
     headerClouds.style.backgroundPosition = (window.innerWidth - 1024) / 2 + window.pageYOffset + 'px';
@@ -785,19 +784,12 @@ window.addEventListener('resize', parallaxClouds);
 var optimizedParallax = function() {
   throttle(isVisible, headerClouds, 100);
   parallaxClouds();
-=======
+};
+
 window.addEventListener('resize', function() {
   if(isVisible(headerClouds)) {
     headerClouds.style.backgroundPosition = (window.innerWidth - 1024) / 2 + window.pageYOffset + 'px';
   }
 });
-
-var optimizedParallax = function() {
-  throttle(isVisible, headerClouds, 100);
-  if(isVisible(headerClouds)) {
-    headerClouds.style.backgroundPosition = (window.innerWidth - 1024) / 2 + window.pageYOffset + 'px';
-  }
->>>>>>> refs/remotes/origin/module6-task1
-};
 
 window.addEventListener('scroll', optimizedParallax);
