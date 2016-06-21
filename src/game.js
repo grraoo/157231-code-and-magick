@@ -744,35 +744,4 @@
   var game = new Game(document.querySelector('.demo'));
   game.initializeLevelAndStart();
   game.setGameStatus(window.Game.Verdict.INTRO);
-
-  var demoBlock = document.querySelector('.demo');
-
-  window.addEventListener('scroll', function() {
-    if(!isVisible(demoBlock)) {
-      game.setGameStatus(window.Game.Verdict.PAUSE);
-    }
-  });
 })();
-
-var headerClouds = document.querySelector('.header-clouds');
-
-var THROTTLE_DELAY = 100;
-
-var isVisible = function(elem) {
-  var lastCall = Date.now();
-  var elemPosition = elem.getBoundingClientRect().bottom;
-  window.addEventListener('scroll', function() {
-    if (Date.now() - lastCall >= THROTTLE_DELAY) {
-      lastCall = Date.now();
-      elemPosition = elem.getBoundingClientRect().bottom;
-    }
-  });
-
-  return elemPosition > 0;
-};
-
-window.addEventListener('scroll', function() {
-  if(isVisible(headerClouds)) {
-    headerClouds.style.backgroundPosition = 50 + window.pageYOffset / 10 + '%';
-  }
-});
