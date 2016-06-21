@@ -774,7 +774,7 @@ var isVisible = function(elem) {
 };
 
 var parallaxClouds = function() {
-if(isVisible(headerClouds)) {
+  if(isVisible(headerClouds)) {
     headerClouds.style.backgroundPosition = (window.innerWidth - 1024) / 2 + window.pageYOffset + 'px';
   }
 };
