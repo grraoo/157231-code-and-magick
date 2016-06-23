@@ -58,12 +58,11 @@ var buildFilteredReviews = function() {
 };
 
 var enableFilter = function(filter) {
-  reviewFilters.classList.add('invisible');
   reviewsMore.classList.remove('invisible');
   pageNumber = 0;
   reviewsContainer.innerHTML = '';
   filters.getReviewsFiltered(filter);
-  buildReviewList(window.filteredReviews, pageNumber);
+  buildReviewList(window.reviewsFiltered, pageNumber);
 };
 
 buildFilteredReviews();

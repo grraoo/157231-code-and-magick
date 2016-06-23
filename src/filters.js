@@ -79,7 +79,7 @@ var getReviewsFiltered = function(filter) {
       reviewsFiltered = popularReviews;
       break;
   }
-  window.reviewsFiltered = reviewsFiltered;
+window.reviewsFiltered = reviewsFiltered;
 };
 
 module.exports = {
