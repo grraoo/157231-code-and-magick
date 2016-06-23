@@ -3,7 +3,7 @@
 
 var reviewsBlock = document.querySelector('.reviews');
 var REVIEWS_LOAD_URL = '//o0.github.io/assets/json/reviews.json';
-
+var reviews = [];
 
 
 module.exports = {
@@ -31,5 +31,6 @@ module.exports = {
       callback(loadedData);
     };
     xhr.send();
-  }
+  },
+  reviews: reviews
 };

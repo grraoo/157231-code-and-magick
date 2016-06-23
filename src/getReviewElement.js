@@ -1,7 +1,5 @@
 'use strict';
 
-window.reviewsContainer = document.querySelector('.reviews-list');
-
 var templateElement = document.querySelector('template');
 var IMAGE_LOAD_TIMEOUT = 10000;
 var elementToClone;
