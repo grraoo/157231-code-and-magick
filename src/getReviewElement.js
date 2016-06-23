@@ -12,7 +12,7 @@ if ('content' in templateElement) {
   elementToClone = templateElement.querySelector('.review');
 }
 
- var getReviewElement = function(data, container) {
+var getReviewElement = function(data, container) {
   var element = elementToClone.cloneNode(true);
 
   var ratingStar = element.querySelector('.review-rating');
