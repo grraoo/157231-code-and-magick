@@ -779,7 +779,6 @@ var parallaxClouds = function() {
   }
 };
 
-window.addEventListener('resize', parallaxClouds);
 
 var optimizedParallax = function() {
   throttle(isVisible, headerClouds, 100);
@@ -792,4 +791,5 @@ window.addEventListener('resize', function() {
   }
 });
 
+window.addEventListener('resize', parallaxClouds);
 window.addEventListener('scroll', optimizedParallax);
