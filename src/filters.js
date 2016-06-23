@@ -1,4 +1,5 @@
 'use strict';
+
 var load = require('./load.js');
 
 var MS_IN_FOUR_DAYS = 60 * 60 * 24 * 1000 * 4;
@@ -45,43 +46,41 @@ var validateFilters = function() {
   });
 };
 
-var getReviewsFiltered = function(filter) {
-  validateFilters();
-  var reviewsAll = load.reviews.slice(0);
-  var filterContent = [reviewsAll.length, recentReviews.length, goodReviews.length, badReviews.length, popularReviews.length];
-  for (var i = 0; i < filterContent.length; i++) {
-    if (!filterContent[i]) {
-      filterLabels[i].classList.add('disabled-label');
-    }
-  }
-
-  for (i = 0; i < filterLabels.length; i++) {
-    var sup = document.createElement('sup');
-    sup.innerHTML = '(' + filterContent[i] + ')';
-    sup.classList.add('reviewsNumber');
-    filterLabels[i].appendChild(sup);
-  }
-
-  switch (filter) {
-    case FilterNames.ALL:
-      reviewsFiltered = allReviews;
-      break;
-    case FilterNames.RECENT:
-      reviewsFiltered = recentReviews;
-      break;
-    case FilterNames.GOOD:
-      reviewsFiltered = goodReviews;
-      break;
-    case FilterNames.BAD:
-      reviewsFiltered = badReviews;
-      break;
-    case FilterNames.POPULAR:
-      reviewsFiltered = popularReviews;
-      break;
-  }
-window.reviewsFiltered = reviewsFiltered;
-};
-
 module.exports = {
-  getReviewsFiltered: getReviewsFiltered
+  getReviewsFiltered: function(filter) {
+    validateFilters();
+    var reviewsAll = load.reviews.slice(0);
+    var filterContent = [reviewsAll.length, recentReviews.length, goodReviews.length, badReviews.length, popularReviews.length];
+    for (var i = 0; i < filterContent.length; i++) {
+      if (!filterContent[i]) {
+        filterLabels[i].classList.add('disabled-label');
+      }
+    }
+
+    for (i = 0; i < filterLabels.length; i++) {
+      var sup = document.createElement('sup');
+      sup.innerHTML = '(' + filterContent[i] + ')';
+      sup.classList.add('reviewsNumber');
+      filterLabels[i].appendChild(sup);
+    }
+
+    switch (filter) {
+      case FilterNames.ALL:
+        reviewsFiltered = allReviews;
+        break;
+      case FilterNames.RECENT:
+        reviewsFiltered = recentReviews;
+        break;
+      case FilterNames.GOOD:
+        reviewsFiltered = goodReviews;
+        break;
+      case FilterNames.BAD:
+        reviewsFiltered = badReviews;
+        break;
+      case FilterNames.POPULAR:
+        reviewsFiltered = popularReviews;
+        break;
+    }
+    window.reviewsFiltered = reviewsFiltered;
+  }
 };

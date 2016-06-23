@@ -27,10 +27,10 @@ module.exports = {
     };
 
     xhr.onload = function(evt) {
-      var loadedData = JSON.parse(evt.target.response);
-      callback(loadedData);
+      callback(JSON.parse(evt.target.response));
     };
     xhr.send();
   },
+
   reviews: reviews
 };
