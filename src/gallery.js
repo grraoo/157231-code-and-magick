@@ -24,11 +24,9 @@ var savePhotos = function(pics) {
     photosArray[i].src = pics[i];
     photosArray[i].onload = function() {
       photos[photosArray.indexOf(this)].addEventListener('click', function(evt) {
-        showGallery();
         evt.preventDefault();
         currentPhotoIndex = pics.indexOf(this.src);
-        currentPhoto.appendChild(photosArray[currentPhotoIndex]);
-        currentPhotoNumber.innerHTML = currentPhotoIndex + 1;
+        showGallery(currentPhotoIndex);
       });
     };
   }
@@ -62,8 +60,10 @@ var _onDocumentKeyDown = function(evt) {
   }
 };
 
-var showGallery = function() {
+var showGallery = function(index) {
   galleryViewport.classList.remove('invisible');
+  currentPhoto.appendChild(photosArray[index]);
+  currentPhotoNumber.innerHTML = index + 1;
   galleryControls[0].addEventListener('click', showPrevPhoto);
   galleryControls[1].addEventListener('click', showNextPhoto);
   window.addEventListener('keypress', _onDocumentKeyDown);
@@ -72,8 +72,7 @@ var showGallery = function() {
 
 var closeGallery = function() {
   galleryViewport.classList.add('invisible');
-  var photoCurrent = currentPhoto.querySelector('img');
-  currentPhoto.removeChild(photoCurrent);
+  currentPhoto.removeChild(currentPhoto.querySelector('img'));
   galleryControls[0].removeEventListener('click', showPrevPhoto);
   galleryControls[1].removeEventListener('click', showNextPhoto);
   window.removeEventListener('keypress', _onDocumentKeyDown);
