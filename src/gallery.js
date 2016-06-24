@@ -20,7 +20,7 @@ for(var i = 0; i < photos.length; i++) {
 
 var savePhotos = function(pics) {
   for(i = 0; i < pics.length; i++) {
-    photosArray[i] = new Image(600);
+    photosArray[i] = new Image();
     photosArray[i].src = pics[i];
     photosArray[i].onload = function() {
       photos[photosArray.indexOf(this)].addEventListener('click', function(evt) {
