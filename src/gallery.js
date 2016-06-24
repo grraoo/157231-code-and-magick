@@ -38,20 +38,16 @@ var showPrevPhoto = function() {
   if(currentPhotoIndex === 0) {
     currentPhotoIndex = 6;
   }
-  var photoCurrent = currentPhoto.querySelector('img');
-  currentPhoto.replaceChild(photosArray[currentPhotoIndex - 1], photoCurrent);
+  showGallery(currentPhotoIndex - 1);
   currentPhotoIndex--;
-  currentPhotoNumber.innerHTML = currentPhotoIndex + 1;
 };
 
 var showNextPhoto = function() {
   if(currentPhotoIndex === 5) {
     currentPhotoIndex = -1;
   }
-  var photoCurrent = currentPhoto.querySelector('img');
-  currentPhoto.replaceChild(photosArray[currentPhotoIndex + 1], photoCurrent);
+  showGallery(currentPhotoIndex + 1);
   currentPhotoIndex++;
-  currentPhotoNumber.innerHTML = currentPhotoIndex + 1;
 };
 
 var _onDocumentKeyDown = function(evt) {
@@ -61,22 +57,29 @@ var _onDocumentKeyDown = function(evt) {
 };
 
 var showGallery = function(index) {
+  closeGallery();
   galleryViewport.classList.remove('invisible');
-  currentPhoto.appendChild(photosArray[index]);
+  if(currentPhoto.querySelector('img')) {
+    currentPhoto.replaceChild(photosArray[index], currentPhoto.querySelector('img'));
+  } else {
+    currentPhoto.appendChild(photosArray[index]);
+  }
   currentPhotoNumber.innerHTML = index + 1;
   galleryControls[0].addEventListener('click', showPrevPhoto);
   galleryControls[1].addEventListener('click', showNextPhoto);
-  window.addEventListener('keypress', _onDocumentKeyDown);
+  window.addEventListener('keydown', _onDocumentKeyDown);
   galleryToClose.addEventListener('click', closeGallery);
 };
 
 var closeGallery = function() {
   galleryViewport.classList.add('invisible');
-  currentPhoto.removeChild(currentPhoto.querySelector('img'));
+  if(currentPhoto.querySelector('img')) {
+    currentPhoto.removeChild(currentPhoto.querySelector('img'));
+  }
   galleryControls[0].removeEventListener('click', showPrevPhoto);
   galleryControls[1].removeEventListener('click', showNextPhoto);
-  window.removeEventListener('keypress', _onDocumentKeyDown);
   galleryToClose.removeEventListener('click', closeGallery);
+  window.removeEventListener('keypress', _onDocumentKeyDown);
 };
 
 module.exports = {
