@@ -41,10 +41,10 @@ var validateFilters = function() {
   ReviewsFiltered.popularReviews = reviewsToFilter.sort(function(a, b) {
     return b.review_usefulness - a.review_usefulness;
   });
-  
+
   var reviewsAll = load.reviews.slice(0);
   var filterContent = [reviewsAll.length, ReviewsFiltered.recentReviews.length, ReviewsFiltered.goodReviews.length, ReviewsFiltered.badReviews.length, ReviewsFiltered.popularReviews.length];
-  
+
   for (i = 0; i < filterLabels.length; i++) {
     var sup = document.createElement('sup');
     sup.innerHTML = '(' + filterContent[i] + ')';
