@@ -67,7 +67,7 @@ var showGallery = function(index) {
   currentPhotoNumber.innerHTML = index + 1;
   galleryControls[0].addEventListener('click', showPrevPhoto);
   galleryControls[1].addEventListener('click', showNextPhoto);
-  window.addEventListener('keydown', _onDocumentKeyDown);
+  document.addEventListener('keydown', _onDocumentKeyDown);
   galleryToClose.addEventListener('click', closeGallery);
 };
 
@@ -79,7 +79,7 @@ var closeGallery = function() {
   galleryControls[0].removeEventListener('click', showPrevPhoto);
   galleryControls[1].removeEventListener('click', showNextPhoto);
   galleryToClose.removeEventListener('click', closeGallery);
-  window.removeEventListener('keypress', _onDocumentKeyDown);
+  document.removeEventListener('keypress', _onDocumentKeyDown);
 };
 
 module.exports = {

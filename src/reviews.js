@@ -5,8 +5,14 @@ var filters = require('./filters.js');
 var getReviewElement = require('./getReviewElement.js');
 var reviewFilters = document.querySelector('.reviews-filter');
 
-
-
+var FilterNames = {
+  'ALL': 'reviews-all',
+  'RECENT': 'reviews-recent',
+  'GOOD': 'reviews-good',
+  'BAD': 'reviews-bad',
+  'POPULAR': 'reviews-popular'
+};
+var reviewsFiltered = [];
 var reviewsContainer = document.querySelector('.reviews-list');
 
 var DEFAULT_FILTER = document.querySelector('input[name = "reviews"]:checked').id;
@@ -31,18 +37,40 @@ var buildReviewList = function(reviewList, page) {
 
 var showCurrentPage = function() {
   pageNumber++;
-  if(isNextPageNotAvailable(window.reviewsFiltered, pageNumber + 1, PAGE_SIZE)) {
+  if(isNextPageNotAvailable(reviewsFiltered, pageNumber + 1, PAGE_SIZE)) {
     reviewsMore.classList.add('invisible');
   }
-  buildReviewList(window.reviewsFiltered, pageNumber);
+  buildReviewList(reviewsFiltered, pageNumber);
+};
+
+var getReviewsFiltered = function(filter) {
+  filters.validateFilters();
+
+  switch (filter) {
+    case FilterNames.ALL:
+      reviewsFiltered = filters.ReviewsFiltered.allReviews;
+      break;
+    case FilterNames.RECENT:
+      reviewsFiltered = filters.ReviewsFiltered.recentReviews;
+      break;
+    case FilterNames.GOOD:
+      reviewsFiltered = filters.ReviewsFiltered.goodReviews;
+      break;
+    case FilterNames.BAD:
+      reviewsFiltered = filters.ReviewsFiltered.badReviews;
+      break;
+    case FilterNames.POPULAR:
+      reviewsFiltered = filters.ReviewsFiltered.popularReviews;
+      break;
+  }
+  buildReviewList(reviewsFiltered, pageNumber);
 };
 
 var buildFilteredReviews = function() {
   reviewsMore.classList.remove('invisible');
   load.getReviewList(function(data) {
     load.reviews = data;
-    filters.getReviewsFiltered(DEFAULT_FILTER);
-    buildReviewList(window.reviewsFiltered, pageNumber);
+    getReviewsFiltered(DEFAULT_FILTER);
   });
   reviewsMore.addEventListener('click', showCurrentPage);
 
@@ -61,8 +89,7 @@ var enableFilter = function(filter) {
   reviewsMore.classList.remove('invisible');
   pageNumber = 0;
   reviewsContainer.innerHTML = '';
-  filters.getReviewsFiltered(filter);
-  buildReviewList(window.reviewsFiltered, pageNumber);
+  getReviewsFiltered(filter);
 };
 
 buildFilteredReviews();
