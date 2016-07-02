@@ -3,6 +3,7 @@
 var load = require('./load.js');
 var filters = require('./filters.js');
 var Review = require('./getReviewElement.js');
+
 var reviewFilters = document.querySelector('.reviews-filter');
 
 var FilterNames = {
@@ -12,8 +13,10 @@ var FilterNames = {
   'BAD': 'reviews-bad',
   'POPULAR': 'reviews-popular'
 };
+
 var reviewsFiltered = [];
 var reviewsContainer = document.querySelector('.reviews-list');
+var reviewsToRemove = [];
 
 var DEFAULT_FILTER = document.querySelector('input[name = "reviews"]:checked').id;
 var reviewsMore = document.querySelector('.reviews-controls-more');
@@ -34,6 +37,7 @@ var buildReviewList = function(reviewList, page) {
 
   reviewList.slice(from, to).forEach(function(review) {
     review = new Review(review, reviewsContainer);
+    reviewsToRemove.push(review);
   });
 
   reviewFilters.classList.remove('invisible');
@@ -91,7 +95,10 @@ var buildFilteredReviews = function() {
 var enableFilter = function(filter) {
   reviewsMore.classList.remove('invisible');
   pageNumber = 0;
-  reviewsContainer.innerHTML = '';
+  reviewsToRemove.forEach(function(review) {
+    review.remove();
+  });
+  reviewsToRemove = [];
   getReviewsFiltered(filter);
 };
 
