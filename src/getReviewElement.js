@@ -4,6 +4,14 @@ var templateElement = document.querySelector('template');
 var IMAGE_LOAD_TIMEOUT = 10000;
 var elementToClone;
 
+var Review = function(data, container) {
+  this.data = data;
+  this.element = getReviewElement(this.data, container);
+  this.remove = function() {
+    this.element.parentNode.removeChild(this.element);
+  };
+};
+
 if ('content' in templateElement) {
   elementToClone = templateElement.content.querySelector('.review');
 } else {
@@ -43,6 +51,4 @@ var getReviewElement = function(data, container) {
   return element;
 };
 
-module.exports = {
-  build: getReviewElement
-};
+module.exports = Review;

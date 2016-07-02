@@ -2,7 +2,7 @@
 
 var load = require('./load.js');
 var filters = require('./filters.js');
-var getReviewElement = require('./getReviewElement.js');
+var Review = require('./getReviewElement.js');
 var reviewFilters = document.querySelector('.reviews-filter');
 
 var FilterNames = {
@@ -30,7 +30,9 @@ var buildReviewList = function(reviewList, page) {
   var to = from + PAGE_SIZE;
 
   reviewList.slice(from, to).forEach(function(review) {
-    getReviewElement.build(review, reviewsContainer);
+    reviewList = [];
+    review = (new Review(review, reviewsContainer)).data;
+    reviewList.push(review);
   });
   reviewFilters.classList.remove('invisible');
 };
@@ -44,7 +46,7 @@ var showCurrentPage = function() {
 };
 
 var getReviewsFiltered = function(filter) {
-  filters.validateFilters();
+  filters.validateFilters(load.reviews);
 
   switch (filter) {
     case FilterNames.ALL:
@@ -81,6 +83,9 @@ var buildFilteredReviews = function() {
     }
     if(clickTarget.classList.contains('reviews-filter-item')) {
       enableFilter(clickTarget.getAttribute('for'));
+      if(isNextPageNotAvailable(reviewsFiltered, pageNumber + 1, PAGE_SIZE)) {
+        reviewsMore.classList.add('invisible');
+      }
     }
   });
 };

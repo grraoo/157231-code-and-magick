@@ -1,7 +1,5 @@
 'use strict';
 
-var load = require('./load.js');
-
 var MS_IN_FOUR_DAYS = 60 * 60 * 24 * 1000 * 4;
 
 var ReviewsFiltered = {
@@ -16,13 +14,13 @@ var defaultLabelTExt = ['Все', 'Недавние', 'Хорошие', 'Пло�
 var filterLabels = document.querySelectorAll('.reviews-filter-item');
 
 
-var validateFilters = function() {
+var validateFilters = function(reviews) {
   for (var i = 0; i < filterLabels.length; i++) {
     filterLabels[i].innerHTML = defaultLabelTExt[i];
   }
 
-  var reviewsToFilter = load.reviews.slice(0);
-  ReviewsFiltered.allReviews = load.reviews.slice(0);
+  var reviewsToFilter = reviews.slice(0);
+  ReviewsFiltered.allReviews = reviews;
   ReviewsFiltered.recentReviews = reviewsToFilter.filter(function(review) {
     return (Date.now() - Date.parse(review.date) <= MS_IN_FOUR_DAYS) && (Date.now() >= Date.parse(review.date));
   }).sort(function(a, b) {
@@ -42,7 +40,7 @@ var validateFilters = function() {
     return b.review_usefulness - a.review_usefulness;
   });
 
-  var reviewsAll = load.reviews.slice(0);
+  var reviewsAll = reviews.slice(0);
   var filterContent = [reviewsAll.length, ReviewsFiltered.recentReviews.length, ReviewsFiltered.goodReviews.length, ReviewsFiltered.badReviews.length, ReviewsFiltered.popularReviews.length];
 
   for (i = 0; i < filterLabels.length; i++) {
