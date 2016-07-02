@@ -25,23 +25,22 @@ var isNextPageNotAvailable = function(reviewList, page, pageSize) {
 };
 
 var buildReviewList = function(reviewList, page) {
+  if(isNextPageNotAvailable(reviewsFiltered, pageNumber + 1, PAGE_SIZE)) {
+    reviewsMore.classList.add('invisible');
+  }
 
   var from = page * PAGE_SIZE;
   var to = from + PAGE_SIZE;
 
   reviewList.slice(from, to).forEach(function(review) {
-    reviewList = [];
-    review = (new Review(review, reviewsContainer)).data;
-    reviewList.push(review);
+    review = new Review(review, reviewsContainer);
   });
+
   reviewFilters.classList.remove('invisible');
 };
 
 var showCurrentPage = function() {
   pageNumber++;
-  if(isNextPageNotAvailable(reviewsFiltered, pageNumber + 1, PAGE_SIZE)) {
-    reviewsMore.classList.add('invisible');
-  }
   buildReviewList(reviewsFiltered, pageNumber);
 };
 
@@ -78,14 +77,13 @@ var buildFilteredReviews = function() {
 
   reviewFilters.addEventListener('click', function(evt) {
     var clickTarget = evt.target;
+
     if(evt.target.tagName.toLowerCase() === 'sup') {
       clickTarget = evt.target.parentElement;
     }
+
     if(clickTarget.classList.contains('reviews-filter-item')) {
       enableFilter(clickTarget.getAttribute('for'));
-      if(isNextPageNotAvailable(reviewsFiltered, pageNumber + 1, PAGE_SIZE)) {
-        reviewsMore.classList.add('invisible');
-      }
     }
   });
 };

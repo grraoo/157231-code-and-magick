@@ -7,9 +7,6 @@ var elementToClone;
 var Review = function(data, container) {
   this.data = data;
   this.element = getReviewElement(this.data, container);
-  this.remove = function() {
-    this.element.parentNode.removeChild(this.element);
-  };
 
   var that = this;
 
@@ -17,9 +14,9 @@ var Review = function(data, container) {
   this.element.quizNo = this.element.querySelector('.review-quiz-answer-no');
 
   var onQuizClick = function() {
-  if (that.element.querySelector('.review-quiz-answer-active')){
-    that.element.querySelector('.review-quiz-answer-active').classList.remove('review-quiz-answer-active');
-  }
+    if (that.element.querySelector('.review-quiz-answer-active')) {
+      that.element.querySelector('.review-quiz-answer-active').classList.remove('review-quiz-answer-active');
+    }
     this.classList.add('review-quiz-answer-active');
   };
 
@@ -31,7 +28,6 @@ var Review = function(data, container) {
     this.element.quizNo.removeEventListener('click', onQuizClick);
     this.element.parentNode.removeChild(this.element);
   };
-
 };
 
 if ('content' in templateElement) {
@@ -64,7 +60,6 @@ var getReviewElement = function(data, container) {
   element.querySelector('.review-author').title = data.author.name;
   element.querySelector('.review-author').alt = data.author.name;
 
-  
   imageLoadTimeout = setTimeout(function() {
     userPhoto.src = '';
     element.classList.add('review-load-failure');
