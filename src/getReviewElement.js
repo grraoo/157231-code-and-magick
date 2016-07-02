@@ -4,6 +4,32 @@ var templateElement = document.querySelector('template');
 var IMAGE_LOAD_TIMEOUT = 10000;
 var elementToClone;
 
+var Review = function(data, container) {
+  this.data = data;
+  this.element = getReviewElement(this.data, container);
+
+  var that = this;
+
+  this.element.quizYes = this.element.querySelector('.review-quiz-answer-yes');
+  this.element.quizNo = this.element.querySelector('.review-quiz-answer-no');
+
+  var onQuizClick = function() {
+    if (that.element.querySelector('.review-quiz-answer-active')) {
+      that.element.querySelector('.review-quiz-answer-active').classList.remove('review-quiz-answer-active');
+    }
+    this.classList.add('review-quiz-answer-active');
+  };
+
+  this.element.quizYes.addEventListener('click', onQuizClick);
+  this.element.quizNo.addEventListener('click', onQuizClick);
+
+  this.remove = function() {
+    this.element.quizYes.removeEventListener('click', onQuizClick);
+    this.element.quizNo.removeEventListener('click', onQuizClick);
+    this.element.parentNode.removeChild(this.element);
+  };
+};
+
 if ('content' in templateElement) {
   elementToClone = templateElement.content.querySelector('.review');
 } else {
@@ -43,6 +69,4 @@ var getReviewElement = function(data, container) {
   return element;
 };
 
-module.exports = {
-  build: getReviewElement
-};
+module.exports = Review;
