@@ -1,88 +1,90 @@
 'use strict';
 
-var photogallery = document.querySelector('.photogallery');
-var photos = photogallery.querySelectorAll('img');
-var galleryViewport = document.querySelector('.overlay-gallery');
-var currentPhoto = galleryViewport.querySelector('.overlay-gallery-preview');
-var currentPhotoNumber = galleryViewport.querySelector('.preview-number-current');
-var photoNumberTotal = galleryViewport.querySelector('.preview-number-total');
-var galleryToClose = galleryViewport.querySelector('.overlay-gallery-close');
-var galleryControls = galleryViewport.querySelectorAll('.overlay-gallery-control');
-var photosArray = [];
-var photoSrcs = [];
-var currentPhotoIndex;
+var Gallery = function() {
 
-photoNumberTotal.innerHTML = photos.length;
+  var that = this;
 
-for(var i = 0; i < photos.length; i++) {
-  photoSrcs[i] = photos[i].src;
-}
+  this.photogallery = document.querySelector('.photogallery');
+  this.photos = this.photogallery.querySelectorAll('img');
+  this.galleryViewport = document.querySelector('.overlay-gallery');
+  this.currentPhoto = that.galleryViewport.querySelector('.overlay-gallery-preview');
+  this.currentPhotoNumber = that.galleryViewport.querySelector('.preview-number-current');
+  this.photoNumberTotal = that.galleryViewport.querySelector('.preview-number-total');
+  this.galleryToClose = that.galleryViewport.querySelector('.overlay-gallery-close');
+  this.galleryControls = that.galleryViewport.querySelectorAll('.overlay-gallery-control');
+  this.photosArray = [];
+  this.photoSrcs = [];
+  this.currentPhotoIndex = 0;
 
-var savePhotos = function(pics) {
-  for(i = 0; i < pics.length; i++) {
-    photosArray[i] = new Image();
-    photosArray[i].src = pics[i];
-    photosArray[i].onload = function() {
-      photos[photosArray.indexOf(this)].addEventListener('click', function(evt) {
-        evt.preventDefault();
-        currentPhotoIndex = pics.indexOf(this.src);
-        showGallery(currentPhotoIndex);
-      });
-    };
+  this.photoNumberTotal.innerHTML = this.photos.length;
+
+  for(var i = 0; i < that.photos.length; i++) {
+    that.photoSrcs[i] = that.photos[i].src;
   }
+
+  this.savePhotos = function(pics) {
+    for(i = 0; i < pics.length; i++) {
+      that.photosArray[i] = new Image();
+      that.photosArray[i].src = pics[i];
+      that.photosArray[i].onload = function() {
+        that.photos[that.photosArray.indexOf(this)].addEventListener('click', function(evt) {
+          evt.preventDefault();
+          that.currentPhotoIndex = pics.indexOf(this.src);
+          that.showGallery(that.currentPhotoIndex);
+        });
+      };
+    }
+  };
+
+  this.savePhotos(that.photoSrcs);
+
+  this.showPrevPhoto = function() {
+    if(that.currentPhotoIndex === 0) {
+      that.currentPhotoIndex = that.photos.length;
+    }
+    that.showGallery(that.currentPhotoIndex - 1);
+    that.currentPhotoIndex--;
+  };
+
+  this.showNextPhoto = function() {
+    if(that.currentPhotoIndex === that.photos.length - 1) {
+      that.currentPhotoIndex = -1;
+    }
+    that.showGallery(that.currentPhotoIndex + 1);
+    that.currentPhotoIndex++;
+  };
+
+  this._onDocumentKeyDown = function(evt) {
+    if(evt.keyCode === 27) {
+      that.closeGallery();
+    }
+  };
+
+  this.showGallery = function(index) {
+    that.closeGallery();
+    that.galleryViewport.classList.remove('invisible');
+    if(that.currentPhoto.querySelector('img')) {
+      that.currentPhoto.replaceChild(that.photosArray[index], that.currentPhoto.querySelector('img'));
+    } else {
+      that.currentPhoto.appendChild(that.photosArray[index]);
+    }
+    that.currentPhotoNumber.innerHTML = index + 1;
+    that.galleryControls[0].addEventListener('click', that.showPrevPhoto);
+    that.galleryControls[1].addEventListener('click', that.showNextPhoto);
+    document.addEventListener('keydown', that._onDocumentKeyDown);
+    that.galleryToClose.addEventListener('click', that.closeGallery);
+  };
+
+  this.closeGallery = function() {
+    that.galleryViewport.classList.add('invisible');
+    if(that.currentPhoto.querySelector('img')) {
+      that.currentPhoto.removeChild(that.currentPhoto.querySelector('img'));
+    }
+    that.galleryControls[0].removeEventListener('click', that.showPrevPhoto);
+    that.galleryControls[1].removeEventListener('click', that.showNextPhoto);
+    that.galleryToClose.removeEventListener('click', that.closeGallery);
+    document.removeEventListener('keypress', that._onDocumentKeyDown);
+  };
 };
 
-savePhotos(photoSrcs);
-
-var showPrevPhoto = function() {
-  if(currentPhotoIndex === 0) {
-    currentPhotoIndex = 6;
-  }
-  showGallery(currentPhotoIndex - 1);
-  currentPhotoIndex--;
-};
-
-var showNextPhoto = function() {
-  if(currentPhotoIndex === 5) {
-    currentPhotoIndex = -1;
-  }
-  showGallery(currentPhotoIndex + 1);
-  currentPhotoIndex++;
-};
-
-var _onDocumentKeyDown = function(evt) {
-  if(evt.keyCode === 27) {
-    closeGallery();
-  }
-};
-
-var showGallery = function(index) {
-  closeGallery();
-  galleryViewport.classList.remove('invisible');
-  if(currentPhoto.querySelector('img')) {
-    currentPhoto.replaceChild(photosArray[index], currentPhoto.querySelector('img'));
-  } else {
-    currentPhoto.appendChild(photosArray[index]);
-  }
-  currentPhotoNumber.innerHTML = index + 1;
-  galleryControls[0].addEventListener('click', showPrevPhoto);
-  galleryControls[1].addEventListener('click', showNextPhoto);
-  document.addEventListener('keydown', _onDocumentKeyDown);
-  galleryToClose.addEventListener('click', closeGallery);
-};
-
-var closeGallery = function() {
-  galleryViewport.classList.add('invisible');
-  if(currentPhoto.querySelector('img')) {
-    currentPhoto.removeChild(currentPhoto.querySelector('img'));
-  }
-  galleryControls[0].removeEventListener('click', showPrevPhoto);
-  galleryControls[1].removeEventListener('click', showNextPhoto);
-  galleryToClose.removeEventListener('click', closeGallery);
-  document.removeEventListener('keypress', _onDocumentKeyDown);
-};
-
-module.exports = {
-  showGallery: showGallery,
-  savePhotos: savePhotos
-};
+module.exports = new Gallery();
