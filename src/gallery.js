@@ -2,88 +2,88 @@
 
 var Gallery = function() {
 
-  var that = this;
+  var self = this;
 
   this.photogallery = document.querySelector('.photogallery');
   this.photos = this.photogallery.querySelectorAll('img');
   this.galleryViewport = document.querySelector('.overlay-gallery');
-  this.currentPhoto = that.galleryViewport.querySelector('.overlay-gallery-preview');
-  this.currentPhotoNumber = that.galleryViewport.querySelector('.preview-number-current');
-  this.photoNumberTotal = that.galleryViewport.querySelector('.preview-number-total');
-  this.galleryToClose = that.galleryViewport.querySelector('.overlay-gallery-close');
-  this.galleryControls = that.galleryViewport.querySelectorAll('.overlay-gallery-control');
+  this.currentPhoto = this.galleryViewport.querySelector('.overlay-gallery-preview');
+  this.currentPhotoNumber = this.galleryViewport.querySelector('.preview-number-current');
+  this.photoNumberTotal = this.galleryViewport.querySelector('.preview-number-total');
+  this.galleryToClose = this.galleryViewport.querySelector('.overlay-gallery-close');
+  this.galleryControls = this.galleryViewport.querySelectorAll('.overlay-gallery-control');
   this.photosArray = [];
   this.photoSrcs = [];
   this.currentPhotoIndex = 0;
 
   this.photoNumberTotal.innerHTML = this.photos.length;
 
-  for(var i = 0; i < that.photos.length; i++) {
-    that.photoSrcs[i] = that.photos[i].src;
+  for(var i = 0; i < this.photos.length; i++) {
+    this.photoSrcs[i] = this.photos[i].src;
   }
 
   this.savePhotos = function(pics) {
     for(i = 0; i < pics.length; i++) {
-      that.photosArray[i] = new Image();
-      that.photosArray[i].src = pics[i];
-      that.photosArray[i].onload = function() {
-        that.photos[that.photosArray.indexOf(this)].addEventListener('click', function(evt) {
+      self.photosArray[i] = new Image();
+      self.photosArray[i].src = pics[i];
+      self.photosArray[i].onload = function() {
+        self.photos[self.photosArray.indexOf(this)].addEventListener('click', function(evt) {
           evt.preventDefault();
-          that.currentPhotoIndex = pics.indexOf(this.src);
-          that.showGallery(that.currentPhotoIndex);
+          self.currentPhotoIndex = pics.indexOf(this.src);
+          self.showGallery(self.currentPhotoIndex);
         });
       };
     }
   };
 
-  this.savePhotos(that.photoSrcs);
+  this.savePhotos(self.photoSrcs);
 
   this.showPrevPhoto = function() {
-    if(that.currentPhotoIndex === 0) {
-      that.currentPhotoIndex = that.photos.length;
+    if(self.currentPhotoIndex === 0) {
+      self.currentPhotoIndex = self.photos.length;
     }
-    that.showGallery(that.currentPhotoIndex - 1);
-    that.currentPhotoIndex--;
+    self.showGallery(self.currentPhotoIndex - 1);
+    self.currentPhotoIndex--;
   };
 
   this.showNextPhoto = function() {
-    if(that.currentPhotoIndex === that.photos.length - 1) {
-      that.currentPhotoIndex = -1;
+    if(self.currentPhotoIndex === self.photos.length - 1) {
+      self.currentPhotoIndex = -1;
     }
-    that.showGallery(that.currentPhotoIndex + 1);
-    that.currentPhotoIndex++;
+    self.showGallery(self.currentPhotoIndex + 1);
+    self.currentPhotoIndex++;
   };
 
   this._onDocumentKeyDown = function(evt) {
     if(evt.keyCode === 27) {
-      that.closeGallery();
+      self.closeGallery();
     }
   };
 
   this.showGallery = function(index) {
-    that.closeGallery();
-    that.galleryViewport.classList.remove('invisible');
-    if(that.currentPhoto.querySelector('img')) {
-      that.currentPhoto.replaceChild(that.photosArray[index], that.currentPhoto.querySelector('img'));
+    self.closeGallery();
+    self.galleryViewport.classList.remove('invisible');
+    if(self.currentPhoto.querySelector('img')) {
+      self.currentPhoto.replaceChild(self.photosArray[index], self.currentPhoto.querySelector('img'));
     } else {
-      that.currentPhoto.appendChild(that.photosArray[index]);
+      self.currentPhoto.appendChild(self.photosArray[index]);
     }
-    that.currentPhotoNumber.innerHTML = index + 1;
-    that.galleryControls[0].addEventListener('click', that.showPrevPhoto);
-    that.galleryControls[1].addEventListener('click', that.showNextPhoto);
-    document.addEventListener('keydown', that._onDocumentKeyDown);
-    that.galleryToClose.addEventListener('click', that.closeGallery);
+    self.currentPhotoNumber.innerHTML = index + 1;
+    self.galleryControls[0].addEventListener('click', self.showPrevPhoto);
+    self.galleryControls[1].addEventListener('click', self.showNextPhoto);
+    document.addEventListener('keydown', self._onDocumentKeyDown);
+    self.galleryToClose.addEventListener('click', self.closeGallery);
   };
 
   this.closeGallery = function() {
-    that.galleryViewport.classList.add('invisible');
-    if(that.currentPhoto.querySelector('img')) {
-      that.currentPhoto.removeChild(that.currentPhoto.querySelector('img'));
+    self.galleryViewport.classList.add('invisible');
+    if(self.currentPhoto.querySelector('img')) {
+      self.currentPhoto.removeChild(self.currentPhoto.querySelector('img'));
     }
-    that.galleryControls[0].removeEventListener('click', that.showPrevPhoto);
-    that.galleryControls[1].removeEventListener('click', that.showNextPhoto);
-    that.galleryToClose.removeEventListener('click', that.closeGallery);
-    document.removeEventListener('keypress', that._onDocumentKeyDown);
+    self.galleryControls[0].removeEventListener('click', self.showPrevPhoto);
+    self.galleryControls[1].removeEventListener('click', self.showNextPhoto);
+    self.galleryToClose.removeEventListener('click', self.closeGallery);
+    document.removeEventListener('keypress', self._onDocumentKeyDown);
   };
 };
 
