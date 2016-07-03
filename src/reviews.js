@@ -18,7 +18,7 @@ var reviewsFiltered = [];
 var reviewsContainer = document.querySelector('.reviews-list');
 var reviewsToRemove = [];
 
-var DEFAULT_FILTER = document.querySelector('input[name = "reviews"]:checked').id;
+var DEFAULT_FILTER = localStorage.getItem('currentFilter') || document.querySelector('input[name = "reviews"]:checked').id;
 var reviewsMore = document.querySelector('.reviews-controls-more');
 var PAGE_SIZE = 3;
 var pageNumber = 0;
@@ -75,6 +75,8 @@ var buildFilteredReviews = function() {
   reviewsMore.classList.remove('invisible');
   load.getReviewList(function(data) {
     load.reviews = data;
+    document.querySelector('input[name = "reviews"]:checked').removeAttribute('checked');
+    document.getElementById(DEFAULT_FILTER).setAttribute('checked', 'checked');
     getReviewsFiltered(DEFAULT_FILTER);
   });
   reviewsMore.addEventListener('click', showCurrentPage);
@@ -93,6 +95,7 @@ var buildFilteredReviews = function() {
 };
 
 var enableFilter = function(filter) {
+  localStorage.setItem('currentFilter', filter);
   reviewsMore.classList.remove('invisible');
   pageNumber = 0;
   reviewsToRemove.forEach(function(review) {
