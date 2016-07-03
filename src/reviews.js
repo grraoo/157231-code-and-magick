@@ -75,6 +75,7 @@ var buildFilteredReviews = function() {
   reviewsMore.classList.remove('invisible');
   load.getReviewList(function(data) {
     load.reviews = data;
+    document.querySelector('input[name = "reviews"]:checked').removeAttribute('checked');
     document.getElementById(DEFAULT_FILTER).setAttribute('checked', 'checked');
     getReviewsFiltered(DEFAULT_FILTER);
   });
