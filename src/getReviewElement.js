@@ -15,7 +15,7 @@ var Review = function(data, container) {
 
 Review.prototype.onQuizClick = function(evt) {
 
-  if(evt.target.classList.contains('review-quiz-answer')){
+  if(evt.target.classList.contains('review-quiz-answer')) {
 
     if (evt.target.parentNode.querySelector('.review-quiz-answer-active')) {
       evt.target.parentNode.querySelector('.review-quiz-answer-active').classList.remove('review-quiz-answer-active');
