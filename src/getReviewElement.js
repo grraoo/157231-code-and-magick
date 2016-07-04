@@ -8,26 +8,26 @@ var Review = function(data, container) {
   this.data = data;
   this.element = getReviewElement(this.data, container);
 
-  var that = this;
+  this.element.quiz = this.element.querySelector('.review-quiz');
 
-  this.element.quizYes = this.element.querySelector('.review-quiz-answer-yes');
-  this.element.quizNo = this.element.querySelector('.review-quiz-answer-no');
+  this.element.quiz.addEventListener('click', this.onQuizClick.bind(this.element.quiz));
+};
 
-  var onQuizClick = function() {
-    if (that.element.querySelector('.review-quiz-answer-active')) {
-      that.element.querySelector('.review-quiz-answer-active').classList.remove('review-quiz-answer-active');
+Review.prototype.onQuizClick = function(evt) {
+
+  if(evt.target.classList.contains('review-quiz-answer')){
+
+    if (evt.target.parentNode.querySelector('.review-quiz-answer-active')) {
+      evt.target.parentNode.querySelector('.review-quiz-answer-active').classList.remove('review-quiz-answer-active');
     }
-    this.classList.add('review-quiz-answer-active');
-  };
+    evt.target.classList.add('review-quiz-answer-active');
+  }
+};
 
-  this.element.quizYes.addEventListener('click', onQuizClick);
-  this.element.quizNo.addEventListener('click', onQuizClick);
-
-  this.remove = function() {
-    this.element.quizYes.removeEventListener('click', onQuizClick);
-    this.element.quizNo.removeEventListener('click', onQuizClick);
-    this.element.parentNode.removeChild(this.element);
-  };
+Review.prototype.remove = function() {
+  this.element.quizYes.removeEventListener('click', this.onQuizClick);
+  this.element.quizNo.removeEventListener('click', this.onQuizClick);
+  this.element.parentNode.removeChild(this.element);
 };
 
 if ('content' in templateElement) {
