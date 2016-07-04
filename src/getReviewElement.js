@@ -10,7 +10,9 @@ var Review = function(data, container) {
 
   this.element.quiz = this.element.querySelector('.review-quiz');
 
-  this.element.quiz.addEventListener('click', this.onQuizClick.bind(this.element.quiz));
+  this.onQuizClick = this.onQuizClick.bind(this.element.quiz);
+
+  this.element.quiz.addEventListener('click', this.onQuizClick);
 };
 
 Review.prototype.onQuizClick = function(evt) {
@@ -25,8 +27,7 @@ Review.prototype.onQuizClick = function(evt) {
 };
 
 Review.prototype.remove = function() {
-  this.element.quizYes.removeEventListener('click', this.onQuizClick);
-  this.element.quizNo.removeEventListener('click', this.onQuizClick);
+  this.element.quiz.removeEventListener('click', this.onQuizClick);
   this.element.parentNode.removeChild(this.element);
 };
 
